@@ -1,10 +1,13 @@
 package dev.theskidster.phys.main;
 
+import java.util.LinkedList;
 import static org.lwjgl.glfw.GLFW.*;
 import org.lwjgl.opengl.GL;
 import static org.lwjgl.opengl.GL11.GL_COLOR_BUFFER_BIT;
 import static org.lwjgl.opengl.GL11.GL_DEPTH_BUFFER_BIT;
 import static org.lwjgl.opengl.GL11.glClear;
+import static org.lwjgl.opengl.GL20.GL_FRAGMENT_SHADER;
+import static org.lwjgl.opengl.GL20.GL_VERTEX_SHADER;
 
 /**
  * @author J Hoffman
@@ -18,10 +21,12 @@ public final class App {
     
     private static boolean vSync = true;
     
+    public static final String DOMAIN  = "phys";
     public static final String VERSION = "0.0.0";
     
     private final Monitor monitor;
     private final Window window;
+    private final GLProgram hudProgram;
     
     /**
      * Initializes utilities such as the window and shader program used by the application.
@@ -37,12 +42,20 @@ public final class App {
         glfwMakeContextCurrent(window.handle);
         GL.createCapabilities();
         
-        //Establish the applications shader program that will render scenes.
+        //Establish the shader for the applications heads up display (hud).
         {
+            var shaderSourceFiles = new LinkedList<Shader>() {{
+                add(new Shader("hudVertex.glsl", GL_VERTEX_SHADER));
+                add(new Shader("hudFragment.glsl", GL_FRAGMENT_SHADER));
+            }};
             
+            hudProgram = new GLProgram(shaderSourceFiles, "hud");
+            hudProgram.use();
+            
+            hudProgram.addUniform(BufferType.INT,  "uType");
+            hudProgram.addUniform(BufferType.VEC3, "uColor");
+            hudProgram.addUniform(BufferType.MAT4, "uProjection");
         }
-        
-        
     }
     
     /**

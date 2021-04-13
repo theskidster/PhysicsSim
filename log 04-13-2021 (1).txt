@@ -1,0 +1,10 @@
+
+04-13-2021 5:36PM
+ERROR: Failed to find uniform: "uPosition" check variable name or GLSL source file where it is declared.
+
+java.lang.RuntimeException
+	dev.theskidster.phys.main.Logger.logSevere(Logger.java:119)
+	dev.theskidster.phys.main.GLProgram.addUniform(GLProgram.java:73)
+	dev.theskidster.phys.main.App.<init>(App.java:56)
+	dev.theskidster.phys.main.Main.main(Main.java:19)
+
