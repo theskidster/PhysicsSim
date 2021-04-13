@@ -28,7 +28,7 @@ public final class App {
      */
     App() {
         if(!glfwInit()) {
-            //TODO: add logger output.
+            Logger.logSevere("Failed to initialize GLFW.", null);
         }
         
         monitor = new Monitor();
@@ -46,10 +46,12 @@ public final class App {
     }
     
     /**
-     * 
+     * Exposes window and starts the applications main logic loop.
      */
     void start() {
         window.show(monitor);
+        
+        Logger.logSystemInfo();
         
         //Variables for timestep
         int tickCount = 0;
