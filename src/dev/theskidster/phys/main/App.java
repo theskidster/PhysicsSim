@@ -1,6 +1,8 @@
 package dev.theskidster.phys.main;
 
 import dev.theskidster.phys.graphics.Color;
+import dev.theskidster.phys.scene.Scene;
+import dev.theskidster.phys.scene.SceneTest;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
@@ -31,6 +33,7 @@ public final class App {
     private final Window window;
     private final GLProgram hudProgram;
     private final HUD hud;
+    private static Scene scene;
     
     /**
      * Initializes utilities such as the window and shader program used by the application.
@@ -90,9 +93,9 @@ public final class App {
      * Exposes window and starts the applications main logic loop.
      */
     void start() {
-        window.show(monitor, hud);
-        
         Logger.logSystemInfo();
+        setScene(new SceneTest());
+        window.show(monitor, hud);
         
         //Variables for timestep
         int tickCount = 0;
@@ -118,12 +121,13 @@ public final class App {
                 
                 glfwPollEvents();
                 
-                //TODO: update scene
+                scene.update();
             }
             
             glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
             
-            //TODO: render scene;
+            //TODO: provide scene shader program.
+            scene.render();
             
             hudProgram.use();
             hud.setProjectionMatrix(hudProgram);
@@ -150,6 +154,9 @@ public final class App {
         glfwSetWindowShouldClose(window.handle, true);
     }
     
+    /**
+     * Checks for possible errors in the current OpenGL state.
+     */
     public static void checkGLError() {
         int glError = glGetError();
         
@@ -167,6 +174,19 @@ public final class App {
             
             Logger.logSevere("OpenGL Error: (" + glError + ") " + desc, null);
         }
+    }
+    
+    /**
+     * Changes the current scene.
+     * 
+     * @param value the new scene to enter
+     */
+    public static void setScene(Scene value) {
+        if(scene != null) scene.exit();
+        scene = value;
+        scene.enter();
+        
+        Logger.logInfo("Entered scene: \"" + scene.name + "\"");
     }
     
 }
