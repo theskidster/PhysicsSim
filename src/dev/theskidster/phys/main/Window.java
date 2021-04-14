@@ -46,17 +46,22 @@ final class Window {
         handle = glfwCreateWindow(width, height, title, NULL, NULL);
     }
     
-    void show(Monitor monitor) {
+    void show(Monitor monitor, HUD hud) {
         glfwSetWindowMonitor(handle, NULL, initialPosX, initialPosY, width, height, monitor.refreshRate);
         glfwSetWindowPos(handle, initialPosX, initialPosY);
         glfwSwapInterval(1);
         glfwSetInputMode(handle, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
         glfwShowWindow(handle);
         
+        //Set initial viewport demensions for the HUD.
+        hud.updateViewport(width, height);
+        
         glfwSetWindowSizeCallback(handle, (window, w, h) -> {
             width  = w;
             height = h;
+            
             glViewport(0, 0, width, height);
+            hud.updateViewport(width, height);
         });
         
     }

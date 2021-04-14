@@ -1,7 +1,6 @@
 package dev.theskidster.phys.main;
 
-import com.mlomb.freetypejni.FreeType;
-import com.mlomb.freetypejni.Library;
+import dev.theskidster.phys.graphics.Color;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
@@ -31,6 +30,7 @@ public final class App {
     private final Monitor monitor;
     private final Window window;
     private final GLProgram hudProgram;
+    private final HUD hud;
     
     /**
      * Initializes utilities such as the window and shader program used by the application.
@@ -73,8 +73,8 @@ public final class App {
         
         /*
         I prefer to localize my dependencies so things are easier to find- here
-        I copy the native freetype .dll to the parent directory of the application
-        so we dont need to install it in the users JAVA_HOME.
+        I copy the native freetype .dll to the current working directory of the 
+        application so we dont need to install it in the users JAVA_HOME.
         */
         try {
             InputStream source = App.class.getResourceAsStream("/dev/theskidster/" + DOMAIN + "/assets/freetype-jni-64.dll");
@@ -83,14 +83,14 @@ public final class App {
             Logger.logSevere("failed to copy dll file", e);
         }
         
-        Library freeType = FreeType.newLibrary(cwd);
+        hud = new HUD(cwd);
     }
     
     /**
      * Exposes window and starts the applications main logic loop.
      */
     void start() {
-        window.show(monitor);
+        window.show(monitor, hud);
         
         Logger.logSystemInfo();
         
@@ -125,6 +125,11 @@ public final class App {
             
             //TODO: render scene;
             
+            hudProgram.use();
+            hud.setProjectionMatrix(hudProgram);
+            //TODO: render scene hud scene.renderHUD(background, font);
+            hud.font.drawString("bleh", 0, 40, Color.WHITE, hudProgram);
+            
             glfwSwapBuffers(window.handle);
             
             if(!ticked) {
@@ -143,6 +148,25 @@ public final class App {
      */
     void exit() {
         glfwSetWindowShouldClose(window.handle, true);
+    }
+    
+    public static void checkGLError() {
+        int glError = glGetError();
+        
+        if(glError != GL_NO_ERROR) {
+            String desc = "";
+            
+            switch(glError) {
+                case GL_INVALID_ENUM      -> desc = "invalid enum";
+                case GL_INVALID_VALUE     -> desc = "invalid value";
+                case GL_INVALID_OPERATION -> desc = "invalid operation";
+                case GL_STACK_OVERFLOW    -> desc = "stack overflow";
+                case GL_STACK_UNDERFLOW   -> desc = "stack underflow";
+                case GL_OUT_OF_MEMORY     -> desc = "out of memory";
+            }
+            
+            Logger.logSevere("OpenGL Error: (" + glError + ") " + desc, null);
+        }
     }
     
 }
