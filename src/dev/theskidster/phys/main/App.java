@@ -1,13 +1,17 @@
 package dev.theskidster.phys.main;
 
+import com.mlomb.freetypejni.FreeType;
+import com.mlomb.freetypejni.Library;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.LinkedList;
 import static org.lwjgl.glfw.GLFW.*;
 import org.lwjgl.opengl.GL;
-import static org.lwjgl.opengl.GL11.GL_COLOR_BUFFER_BIT;
-import static org.lwjgl.opengl.GL11.GL_DEPTH_BUFFER_BIT;
-import static org.lwjgl.opengl.GL11.glClear;
-import static org.lwjgl.opengl.GL20.GL_FRAGMENT_SHADER;
-import static org.lwjgl.opengl.GL20.GL_VERTEX_SHADER;
+import static org.lwjgl.opengl.GL20.*;
 
 /**
  * @author J Hoffman
@@ -36,6 +40,14 @@ public final class App {
             Logger.logSevere("Failed to initialize GLFW.", null);
         }
         
+        if(!System.getProperty("os.name").toLowerCase().contains("win")) {
+            Logger.logSevere("Unsupported operating system. Use a 64 bit Windows system.", null);
+        } else {
+            if(!System.getProperty("os.arch").contains("64")) {
+                Logger.logSevere("Unsupported architecture. Windows system must be 64 bit.", null);
+            }
+        }
+        
         monitor = new Monitor();
         window  = new Window("ode4j testbed v" + VERSION, monitor);
         
@@ -56,6 +68,22 @@ public final class App {
             hudProgram.addUniform(BufferType.VEC3, "uColor");
             hudProgram.addUniform(BufferType.MAT4, "uProjection");
         }
+        
+        String cwd = Path.of("").toAbsolutePath().toString() + "\\freetype-jni-64.dll";
+        
+        /*
+        I prefer to localize my dependencies so things are easier to find- here
+        I copy the native freetype .dll to the parent directory of the application
+        so we dont need to install it in the users JAVA_HOME.
+        */
+        try {
+            InputStream source = App.class.getResourceAsStream("/dev/theskidster/" + DOMAIN + "/assets/freetype-jni-64.dll");
+            Files.copy(source, Paths.get(cwd), StandardCopyOption.REPLACE_EXISTING);
+        } catch (IOException e) {
+            Logger.logSevere("failed to copy dll file", e);
+        }
+        
+        Library freeType = FreeType.newLibrary(cwd);
     }
     
     /**
