@@ -92,6 +92,8 @@ public class GLProgram {
         glUseProgram(handle);
     }
     
+    //TODO: add documentation
+    
     /**
      * 
      * @param name
