@@ -1,5 +1,6 @@
 package dev.theskidster.phys.main;
 
+import dev.theskidster.phys.scene.Scene;
 import java.nio.IntBuffer;
 import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.opengl.GL11.glViewport;
@@ -18,8 +19,8 @@ final class Window {
 
     private final int initialPosX;
     private final int initialPosY;
-    public int width  = 1280;
-    public int height = 720;
+    private int width  = 1280;
+    private int height = 720;
     
     final long handle;
     
@@ -59,6 +60,7 @@ final class Window {
         //Set initial viewport demensions for the HUD.
         hud.updateViewport(width, height);
         camera.updateViewport(width, height);
+        Scene.updateViewport(width, height);
         
         glfwSetWindowSizeCallback(handle, (window, w, h) -> {
             width  = w;
@@ -67,6 +69,7 @@ final class Window {
             glViewport(0, 0, width, height);
             hud.updateViewport(width, height);
             camera.updateViewport(width, height);
+            Scene.updateViewport(width, height);
         });
         
         glfwSetCursorPosCallback(handle, (window, x, y) -> {

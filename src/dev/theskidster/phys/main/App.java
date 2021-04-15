@@ -1,6 +1,5 @@
 package dev.theskidster.phys.main;
 
-import dev.theskidster.phys.graphics.Color;
 import dev.theskidster.phys.scene.Scene;
 import dev.theskidster.phys.scene.SceneTest;
 import java.io.IOException;

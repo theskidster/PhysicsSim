@@ -8,6 +8,9 @@ import org.joml.Vector3f;
  * Created: Apr 14, 2021
  */
 
+/**
+ * Represents a camera that can navigate about the {@linkplain dev.theskidster.phys.scene.Scene Scene}.
+ */
 final class Camera {
 
     private float pitch;
@@ -26,10 +29,20 @@ final class Camera {
     private final Matrix4f view = new Matrix4f();
     private final Matrix4f proj = new Matrix4f();
     
-    void updateViewport(int viewportWidth, int viewportHeight) {
-        proj.setPerspective((float) Math.toRadians(60f), (float) viewportWidth / viewportHeight, 0.1f, Float.POSITIVE_INFINITY);
+    /**
+     * Updates the cameras projection matrix to reflect the current dimensions of the {@linkplain Window}.
+     * 
+     * @param width  the current width of the applications window in pixels
+     * @param height the current height of the applications window in pixels
+     */
+    void updateViewport(int width, int height) {
+        proj.setPerspective((float) Math.toRadians(60f), (float) width / height, 0.1f, Float.POSITIVE_INFINITY);
     }
     
+    /**
+     * 
+     * @param sceneProgram 
+     */
     void render(GLProgram sceneProgram) {
         view.setLookAt(position, position.add(direction, tempVec1), up);
         
@@ -37,10 +50,24 @@ final class Camera {
         sceneProgram.setUniform("uProjection", false, proj);
     }
     
+    /**
+     * Used to dampen the intensity of the input received by the applications {@linkplain Window}.
+     * 
+     * @param currValue   the current value of the input supplied by the window
+     * @param prevValue   the previous value associated with the supplied input value
+     * @param sensitivity the value that will be used to calculate the final change between the previous and current input values
+     * @return a new input value with sensitivity applied
+     */
     private float getChangeIntensity(double currValue, double prevValue, float sensitivity) {
         return (float) (currValue - prevValue) * sensitivity;
     }
     
+    /**
+     * Sets the position of the camera using the input provided by the applications {@linkplain Window}.
+     * 
+     * @param xPos the horizontal position of the mouse cursor in the window
+     * @param yPos the vertical position of the mouse cursor in the window
+     */
     public void setPosition(double xPos, double yPos) {
         if(xPos != prevX || yPos != prevY) {
             float speedX = getChangeIntensity(-xPos, -prevX, 0.017f);
@@ -60,6 +87,12 @@ final class Camera {
         }
     }
     
+    /**
+     * Sets the direction this camera will face using the input provided by the applications {@linkplain Window}.
+     * 
+     * @param xPos the horizontal position of the mouse cursor in the window
+     * @param yPos the vertical position of the mouse cursor in the window
+     */
     public void setDirection(double xPos, double yPos) {
         if(xPos != prevX || yPos != prevY) {
             yaw   += getChangeIntensity(xPos, prevX, 0.35f);
@@ -77,6 +110,11 @@ final class Camera {
         }
     }
     
+    /**
+     * Moves the camera forwards or backwards along the current direction it's facing.
+     * 
+     * @param speed the value supplied by the mouses middle wheel
+     */
     public void dolly(float speed) {
         position.add(direction.mul(speed, tempVec1));
     }

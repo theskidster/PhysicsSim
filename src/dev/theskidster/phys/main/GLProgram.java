@@ -54,19 +54,23 @@ public class GLProgram {
     }
     
     /**
+     * Creates a new {@linkplain UniformVariable uniform variable} object that contains data in a buffer which will later be supplied to the GPU during 
+     * rendering operations.
      * 
-     * @param name
-     * @param buffer
-     * @return 
+     * @param name   the unique name used to identify the uniform variable as it appears in the .glsl source file
+     * @param buffer the data buffer that stores the value which will be supplied to the GPU through a uniform variable
+     * @return a new uniform variable object
      */
     private UniformVariable createUniform(String name, Buffer buffer) {
         return new UniformVariable(glGetUniformLocation(handle, name), buffer);
     }
     
     /**
+     * Creates an association between a CPU-stored data buffer of the type specified to a uniform variable located inside one or more of the shader programs 
+     * source code files.
      * 
-     * @param type
-     * @param name 
+     * @param type the data type of the uniform variable
+     * @param name the unique name used to identify the uniform variable as it appears in the .glsl source file
      */
     void addUniform(BufferType type, String name) {
         if(glGetUniformLocation(handle, name) == -1) {
@@ -86,39 +90,63 @@ public class GLProgram {
     }
     
     /**
-     * Sets this as the current program that will be used by the GPU.
+     * Sets this as the current program that the GPU will use.
      */
     void use() {
         glUseProgram(handle);
     }
     
-    //TODO: add documentation
-    
     /**
+     * Supplies a uniform variable used by the current shader program with a new value.
      * 
-     * @param name
-     * @param value 
+     * @param name  the name used to identify the uniform variable
+     * @param value the value to pass to the shader program
      */
     public void setUniform(String name, int value) {
         glUniform1i(uniforms.get(name).location, value);
     }
     
+    /**
+     * Supplies a uniform variable used by the current shader program with a new value.
+     * 
+     * @param name  the name used to identify the uniform variable
+     * @param value the value to pass to the shader program
+     */
     public void setUniform(String name, float value) {
         glUniform1f(uniforms.get(name).location, value);
     }
     
+    /**
+     * Supplies a uniform variable used by the current shader program with a new value.
+     * 
+     * @param name  the name used to identify the uniform variable
+     * @param value the value to pass to the shader program
+     */
     public void setUniform(String name, Vector2f value) {
         glUniform2fv(
                 uniforms.get(name).location,
                 value.get(uniforms.get(name).asFloatBuffer()));
     }
     
+    /**
+     * Supplies a uniform variable used by the current shader program with a new value.
+     * 
+     * @param name  the name used to identify the uniform variable
+     * @param value the value to pass to the shader program
+     */
     public void setUniform(String name, Vector3f value) {
         glUniform3fv(
                 uniforms.get(name).location,
                 value.get(uniforms.get(name).asFloatBuffer()));
     }
     
+    /**
+     * Supplies a uniform variable used by the current shader program with a new value.
+     * 
+     * @param name      the name used to identify the uniform variable
+     * @param transpose if true, the matrix data provided in the value parameter will be transposed
+     * @param value     the value to pass to the shader program
+     */
     public void setUniform(String name, boolean transpose, Matrix3f value) {
         glUniformMatrix3fv(
                 uniforms.get(name).location,
@@ -126,6 +154,13 @@ public class GLProgram {
                 value.get(uniforms.get(name).asFloatBuffer()));
     }
     
+    /**
+     * Supplies a uniform variable used by the current shader program with a new value.
+     * 
+     * @param name      the name used to identify the uniform variable
+     * @param transpose if true, the matrix data provided in the value parameter will be transposed
+     * @param value     the value to pass to the shader program
+     */
     public void setUniform(String name, boolean transpose, Matrix4f value) {
         glUniformMatrix4fv(
                 uniforms.get(name).location,

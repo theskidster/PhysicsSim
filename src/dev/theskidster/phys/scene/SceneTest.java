@@ -1,6 +1,5 @@
 package dev.theskidster.phys.scene;
 
-import dev.theskidster.phys.entities.TestEntity;
 import dev.theskidster.phys.graphics.Color;
 import dev.theskidster.phys.graphics.FreeTypeFont;
 import dev.theskidster.phys.main.GLProgram;
@@ -19,7 +18,7 @@ public class SceneTest extends Scene {
 
     @Override
     public void enter() {
-        addEntity("test entity", new TestEntity(new Vector3f(0, 0, -10)));
+        addEntity("test entity", new EntityTest(new Vector3f(0, 0, -10)));
     }
 
     @Override

@@ -10,6 +10,9 @@ import static org.lwjgl.opengl.GL30.*;
  * Created: Apr 14, 2021
  */
 
+/**
+ * Component object that supplies implementing classes with various OpenGL utilities required for rendering.
+ */
 public class Graphics {
 
     public final int vao = glGenVertexArrays();
@@ -21,6 +24,11 @@ public class Graphics {
     
     public Matrix4f modelMatrix = new Matrix4f();
     
+    /**
+     * Convenience method provided to bind the default buffers initialized in this object. Implementing classes are expected to define vertex attribute 
+     * layouts following this call in their constructors with methods like 
+     * {@linkplain org.lwjgl.opengl.GL30#glVertexAttribPointer(int, int, int, boolean, int, java.nio.ByteBuffer) glVertexAttribPointer()}.
+     */
     public void bindBuffers() {
         glBindVertexArray(vao);
         
@@ -33,6 +41,9 @@ public class Graphics {
         }
     }
     
+    /**
+     * Convenience method which frees the default buffer objects initialized by this object.
+     */
     public void freeBuffers() {
         glDeleteVertexArrays(vao);
         glDeleteBuffers(vbo);

@@ -32,8 +32,8 @@ public class HUD {
     /**
      * Updates the HUDs projection matrix to reflect the current dimensions of the {@linkplain Window}.
      * 
-     * @param width  the windows width in pixels
-     * @param height the windows height in pixels
+     * @param width  the current width of the applications window in pixels
+     * @param height the current height of the applications window in pixels
      */
     public void updateViewport(int width, int height) {
         projMatrix.setOrtho(0, width, 0, height, 0, Integer.MAX_VALUE);

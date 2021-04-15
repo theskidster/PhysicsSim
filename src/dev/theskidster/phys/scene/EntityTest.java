@@ -1,4 +1,4 @@
-package dev.theskidster.phys.entities;
+package dev.theskidster.phys.scene;
 
 import dev.theskidster.phys.graphics.Graphics;
 import dev.theskidster.phys.main.App;
@@ -12,11 +12,11 @@ import org.lwjgl.system.MemoryStack;
  * Created: Apr 14, 2021
  */
 
-public class TestEntity extends Entity {
+class EntityTest extends Entity {
 
     private final Graphics g = new Graphics();
     
-    public TestEntity(Vector3f position) {
+    EntityTest(Vector3f position) {
         super(position);
         
         try(MemoryStack stack = MemoryStack.stackPush()) {
@@ -40,12 +40,12 @@ public class TestEntity extends Entity {
     }
 
     @Override
-    public void update() {
+    void update() {
         g.modelMatrix.translation(position);
     }
 
     @Override
-    public void render(GLProgram sceneProgram) {
+    void render(GLProgram sceneProgram) {
         glEnable(GL_DEPTH_TEST);
         glBindVertexArray(g.vao);
         
@@ -59,7 +59,7 @@ public class TestEntity extends Entity {
     }
 
     @Override
-    public void destroy() {
+    void destroy() {
         
     }
     
