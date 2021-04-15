@@ -16,7 +16,7 @@ public class SceneTest extends Scene {
 
     @Override
     public void enter() {
-        addEntity("test entity", new TestEntity(new Vector3f(0, 0, 10)));
+        addEntity("test entity", new TestEntity(new Vector3f(0, 0, -10)));
     }
 
     @Override

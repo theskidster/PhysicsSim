@@ -23,9 +23,9 @@ public class TestEntity extends Entity {
             g.vertices = stack.mallocFloat(18);
             
             //(vec3 position), (vec3 color)
-            g.vertices.put(-8).put(-8).put(0)   .put(1).put(0).put(0);
-            g.vertices .put(0) .put(8).put(0)   .put(0).put(1).put(0);
-            g.vertices .put(8).put(-8).put(0)   .put(0).put(0).put(1);
+            g.vertices.put(-1).put(-1).put(0)   .put(1).put(0).put(0);
+            g.vertices .put(0) .put(1).put(0)   .put(0).put(1).put(0);
+            g.vertices .put(1).put(-1).put(0)   .put(0).put(0).put(1);
             
             g.vertices.flip();
         }
@@ -33,10 +33,10 @@ public class TestEntity extends Entity {
         g.bindBuffers();
         
         glVertexAttribPointer(0, 3, GL_FLOAT, false, (6 * Float.BYTES), 0);
-        glVertexAttribPointer(2, 3, GL_FLOAT, false, (6 * Float.BYTES), (3 * Float.BYTES));
+        glVertexAttribPointer(1, 3, GL_FLOAT, false, (6 * Float.BYTES), (3 * Float.BYTES));
         
         glEnableVertexAttribArray(0);
-        glEnableVertexAttribArray(2);
+        glEnableVertexAttribArray(1);
     }
 
     @Override

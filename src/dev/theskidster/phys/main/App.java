@@ -34,6 +34,7 @@ public final class App {
     private final GLProgram hudProgram;
     private final GLProgram sceneProgram;
     private final HUD hud;
+    private final Camera camera;
     private static Scene scene;
     
     /**
@@ -103,7 +104,8 @@ public final class App {
             Logger.logSevere("failed to copy dll file", e);
         }
         
-        hud = new HUD(cwd);
+        hud    = new HUD(cwd);
+        camera = new Camera();
     }
     
     /**
@@ -112,7 +114,7 @@ public final class App {
     void start() {
         Logger.logSystemInfo();
         setScene(new SceneTest());
-        window.show(monitor, hud);
+        window.show(monitor, hud, camera);
         
         //Variables for timestep
         int tickCount = 0;
@@ -138,12 +140,14 @@ public final class App {
                 
                 glfwPollEvents();
                 
+                camera.update(window.width, window.height); //TODO: see if we can only need to set this when the viewport changes size
                 scene.update();
             }
             
             glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
             
             sceneProgram.use();
+            camera.render(sceneProgram);
             scene.render(sceneProgram);
             
             hudProgram.use();

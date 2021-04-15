@@ -18,10 +18,13 @@ final class Window {
 
     private final int initialPosX;
     private final int initialPosY;
-    private int width  = 1280;
-    private int height = 720;
+    public int width  = 1280;
+    public int height = 720;
     
     final long handle;
+    
+    private boolean mouseMiddleHeld;
+    private boolean mouseRightHeld;
     
     /**
      * Creates a new window object that will display the applications visual output.
@@ -46,7 +49,7 @@ final class Window {
         handle = glfwCreateWindow(width, height, title, NULL, NULL);
     }
     
-    void show(Monitor monitor, HUD hud) {
+    void show(Monitor monitor, HUD hud, Camera camera) {
         glfwSetWindowMonitor(handle, NULL, initialPosX, initialPosY, width, height, monitor.refreshRate);
         glfwSetWindowPos(handle, initialPosX, initialPosY);
         glfwSwapInterval(1);
@@ -64,6 +67,26 @@ final class Window {
             hud.updateViewport(width, height);
         });
         
+        glfwSetCursorPosCallback(handle, (window, x, y) -> {
+            if(mouseMiddleHeld ^ mouseRightHeld) {
+                if(mouseMiddleHeld) camera.setPosition(x, y);
+                if(mouseRightHeld)  camera.setDirection(x, y);
+            } else {
+                camera.prevX = x;
+                camera.prevY = y;
+            }
+        });
+        
+        glfwSetMouseButtonCallback(handle, (window, button, action, mods) -> {
+            switch(button) {
+                case GLFW_MOUSE_BUTTON_MIDDLE -> mouseMiddleHeld = (action == GLFW_PRESS);
+                case GLFW_MOUSE_BUTTON_RIGHT  -> mouseRightHeld = (action == GLFW_PRESS);
+            }
+        });
+        
+        glfwSetScrollCallback(handle, (window, xOffset, yOffset) -> {
+            camera.dolly((float) yOffset);
+        });
     }
     
 }
