@@ -32,6 +32,7 @@ public final class App {
     private final Monitor monitor;
     private final Window window;
     private final GLProgram hudProgram;
+    private final GLProgram sceneProgram;
     private final HUD hud;
     private static Scene scene;
     
@@ -70,6 +71,22 @@ public final class App {
             hudProgram.addUniform(BufferType.INT,  "uType");
             hudProgram.addUniform(BufferType.VEC3, "uColor");
             hudProgram.addUniform(BufferType.MAT4, "uProjection");
+        }
+        
+        //Establish the shader that will be used to draw the 3D scene.
+        {
+            var shaderSourceFiles = new LinkedList<Shader>() {{
+                add(new Shader("sceneVertex.glsl", GL_VERTEX_SHADER));
+                add(new Shader("sceneFragment.glsl", GL_FRAGMENT_SHADER));
+            }};
+            
+            sceneProgram = new GLProgram(shaderSourceFiles, "scene");
+            sceneProgram.use();
+            
+            sceneProgram.addUniform(BufferType.INT,  "uType");
+            sceneProgram.addUniform(BufferType.MAT4, "uModel");
+            sceneProgram.addUniform(BufferType.MAT4, "uView");
+            sceneProgram.addUniform(BufferType.MAT4, "uProjection");
         }
         
         String cwd = Path.of("").toAbsolutePath().toString() + "\\freetype-jni-64.dll";
@@ -126,8 +143,8 @@ public final class App {
             
             glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
             
-            //TODO: provide scene shader program.
-            scene.render();
+            sceneProgram.use();
+            scene.render(sceneProgram);
             
             hudProgram.use();
             hud.setProjectionMatrix(hudProgram);
