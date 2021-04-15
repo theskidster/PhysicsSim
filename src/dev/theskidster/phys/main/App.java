@@ -140,7 +140,6 @@ public final class App {
                 
                 glfwPollEvents();
                 
-                camera.update(window.width, window.height); //TODO: see if we can only need to set this when the viewport changes size
                 scene.update();
             }
             
@@ -152,8 +151,7 @@ public final class App {
             
             hudProgram.use();
             hud.setProjectionMatrix(hudProgram);
-            //TODO: render scene hud scene.renderHUD(background, font);
-            hud.font.drawString("bleh", 0, 40, Color.WHITE, hudProgram);
+            scene.renderHUD(hudProgram, hud.font);
             
             glfwSwapBuffers(window.handle);
             

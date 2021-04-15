@@ -1,6 +1,7 @@
 package dev.theskidster.phys.scene;
 
 import dev.theskidster.phys.entities.Entity;
+import dev.theskidster.phys.graphics.FreeTypeFont;
 import dev.theskidster.phys.main.GLProgram;
 import java.util.HashMap;
 import java.util.Map;
@@ -27,6 +28,8 @@ public abstract class Scene {
     }
     
     public abstract void enter();
+    
+    public abstract void renderHUD(GLProgram hudProgram, FreeTypeFont font);
     
     public abstract void exit();
     

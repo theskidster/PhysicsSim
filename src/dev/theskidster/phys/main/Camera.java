@@ -26,7 +26,7 @@ final class Camera {
     private final Matrix4f view = new Matrix4f();
     private final Matrix4f proj = new Matrix4f();
     
-    void update(int viewportWidth, int viewportHeight) {
+    void updateViewport(int viewportWidth, int viewportHeight) {
         proj.setPerspective((float) Math.toRadians(60f), (float) viewportWidth / viewportHeight, 0.1f, Float.POSITIVE_INFINITY);
     }
     

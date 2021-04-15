@@ -58,6 +58,7 @@ final class Window {
         
         //Set initial viewport demensions for the HUD.
         hud.updateViewport(width, height);
+        camera.updateViewport(width, height);
         
         glfwSetWindowSizeCallback(handle, (window, w, h) -> {
             width  = w;
@@ -65,6 +66,7 @@ final class Window {
             
             glViewport(0, 0, width, height);
             hud.updateViewport(width, height);
+            camera.updateViewport(width, height);
         });
         
         glfwSetCursorPosCallback(handle, (window, x, y) -> {
