@@ -11,7 +11,7 @@ import org.joml.Vector3f;
 /**
  * Represents a camera that can navigate about the {@linkplain dev.theskidster.phys.scene.Scene Scene}.
  */
-final class Camera {
+public final class Camera {
 
     private float pitch;
     private float yaw = -90f;
@@ -19,9 +19,9 @@ final class Camera {
     double prevX;
     double prevY;
     
-    final Vector3f position  = new Vector3f();
-    final Vector3f direction = new Vector3f(0, 0, -1);
-    final Vector3f up        = new Vector3f(0, 1, 0);
+    final Vector3f position = new Vector3f();
+    final Vector3f direction       = new Vector3f(0, 0, -1);
+    final Vector3f up              = new Vector3f(0, 1, 0);
     
     private final Vector3f tempVec1 = new Vector3f();
     private final Vector3f tempVec2 = new Vector3f();
@@ -68,7 +68,7 @@ final class Camera {
      * @param xPos the horizontal position of the mouse cursor in the window
      * @param yPos the vertical position of the mouse cursor in the window
      */
-    public void setPosition(double xPos, double yPos) {
+    void setPosition(double xPos, double yPos) {
         if(xPos != prevX || yPos != prevY) {
             float speedX = getChangeIntensity(-xPos, -prevX, 0.017f);
             float speedY = getChangeIntensity(-yPos, -prevY, 0.017f);
@@ -93,7 +93,7 @@ final class Camera {
      * @param xPos the horizontal position of the mouse cursor in the window
      * @param yPos the vertical position of the mouse cursor in the window
      */
-    public void setDirection(double xPos, double yPos) {
+    void setDirection(double xPos, double yPos) {
         if(xPos != prevX || yPos != prevY) {
             yaw   += getChangeIntensity(xPos, prevX, 0.35f);
             pitch += getChangeIntensity(yPos, prevY, 0.35f);
@@ -115,8 +115,47 @@ final class Camera {
      * 
      * @param speed the value supplied by the mouses middle wheel
      */
-    public void dolly(float speed) {
+    void dolly(float speed) {
         position.add(direction.mul(speed, tempVec1));
+    }
+    
+    /**
+     * Sets the position of the camera using the provided values.
+     * 
+     * @param x the cameras new position along the x-axis
+     * @param y the cameras new position along the y-axis
+     * @param z the cameras new position along the z-axis
+     */
+    public void setPosition(float x, float y, float z) {
+        position.set(x, y, z);
+    }
+    
+    /**
+     * Sets the direction of the camera using the provided values. Cursor position values are supplied here so subsequent changes to the cameras direction
+     * with the mouse wont give us whiplash.
+     * 
+     * @param yaw   the left to right direction of the camera. Expects a value between -180 and 180 degrees.
+     * @param pitch the up and down direction of the camera. Expects a value between -90 and 90 degrees.
+     * @param xPos  the current x position of the cursor
+     * @param yPos  the current y position of the cursor
+     */
+    public void setDirection(float yaw, float pitch, double xPos, double yPos) {
+        if(yaw > 180f)  yaw = 180f;
+        if(yaw < -180f) yaw = -180f;
+        
+        this.yaw = yaw;
+        
+        if(pitch > 89f)  pitch = 89f;
+        if(pitch < -89f) pitch = -89f;
+        
+        this.pitch = pitch;
+
+        direction.x = (float) (Math.cos(Math.toRadians(yaw)) * Math.cos(Math.toRadians(pitch)));
+        direction.y = (float) Math.sin(Math.toRadians(pitch)) * -1;
+        direction.z = (float) (Math.sin(Math.toRadians(yaw)) * Math.cos(Math.toRadians(pitch)));
+        
+        prevX = xPos;
+        prevY = yPos;
     }
     
 }

@@ -1,7 +1,7 @@
 package dev.theskidster.phys.main;
 
 import dev.theskidster.phys.scene.Scene;
-import dev.theskidster.phys.scene.SceneTest;
+import dev.theskidster.phys.scene.SceneGravityTest;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
@@ -105,6 +105,7 @@ public final class App {
         
         hud    = new HUD(cwd);
         camera = new Camera();
+        Scene.setCameraReference(camera);
     }
     
     /**
@@ -112,7 +113,7 @@ public final class App {
      */
     void start() {
         Logger.logSystemInfo();
-        setScene(new SceneTest());
+        setScene(new SceneGravityTest());
         window.show(monitor, hud, camera);
         
         //Variables for timestep

@@ -15,12 +15,15 @@ import static org.lwjgl.system.MemoryUtil.NULL;
 /**
  * Represents the applications window.
  */
-final class Window {
+public final class Window {
 
     private final int initialPosX;
     private final int initialPosY;
     private int width  = 1280;
     private int height = 720;
+    
+    private static float mousePosX;
+    private static float mousePosY;
     
     final long handle;
     
@@ -80,6 +83,9 @@ final class Window {
                 camera.prevX = x;
                 camera.prevY = y;
             }
+            
+            mousePosX = (float) x;
+            mousePosY = (float) y;
         });
         
         glfwSetMouseButtonCallback(handle, (window, button, action, mods) -> {
@@ -96,6 +102,24 @@ final class Window {
         glfwSetKeyCallback(handle, (window, key, scancode, action, mods) -> {
             //TODO: add command input mapping
         });
+    }
+    
+    /**
+     * Provides the current horizontal position of the mouse cursor in the window.
+     * 
+     * @return the current position of the cursor along the x-axis
+     */
+    public static float getMouseX() {
+        return mousePosX;
+    }
+    
+    /**
+     * Provides the current vertical position of the mouse cursor in the window.
+     * 
+     * @return the current position of the cursor along the y-axis
+     */
+    public static float getMouseY() {
+        return mousePosY;
     }
     
 }

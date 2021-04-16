@@ -1,6 +1,9 @@
 
-04-15-2021 9:09PM
-ERROR: Failed to compile GLSL file: "sceneVertex.glsl" ERROR: 0:20: 'case' : duplicated label statement in switch 
+04-15-2021 10:43PM
+ERROR: Failed to compile GLSL file: "sceneVertex.glsl" ERROR: 0:31: 'gridPlane' : undeclared identifier 
+ERROR: 0:31: 'gridPlane' : left of '[' is not of type array, matrix, or vector 
+ERROR: 0:31: 'xyz' : field selection requires structure, vector, or matrix on left hand side 
+ERROR: 0:31: '=' :  cannot convert from 'highp float' to '3-component vector of highp float'
 
 
 

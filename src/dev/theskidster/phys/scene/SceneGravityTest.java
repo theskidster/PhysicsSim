@@ -13,18 +13,27 @@ import org.ode4j.ode.OdeHelper;
  * Created: Apr 13, 2021
  */
 
-public class SceneTest extends Scene {
+public class SceneGravityTest extends Scene {
 
     private final DWorld dWorld = OdeHelper.createWorld();
     private final DSpace dSpace = OdeHelper.createHashSpace(null);
     
-    public SceneTest() {
-        super("Test Scene");
+    public SceneGravityTest() {
+        super("Gravity Test");
         
-        addEntity("test entity", new EntityTest(new Vector3f(0, 0, -10)));
+        setCameraPosition(6, 4, 10);
+        setCameraDirection(-120f, 20);
+        
+        //https://www.alsprogrammingresource.com/basic_ode.html
+        //http://ode.org/wiki/index.php?title=Manual
+        //https://learnopengl.com/Advanced-Lighting/Shadows/Shadow-Mapping
+        
+        //TODO: might bundle these together
         addEntity("ground", new EntityGround());
-        
+        addEntity("test", new EntityTest(new Vector3f(0, 1, -5)));
         OdeHelper.createPlane(dSpace, 0, 0, 1, 0);
+        
+        //TODO: drop cube on plane.
     }
 
     @Override

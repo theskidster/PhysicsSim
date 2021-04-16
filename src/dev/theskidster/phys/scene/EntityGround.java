@@ -24,10 +24,10 @@ class EntityGround extends Entity {
             g.indices  = stack.mallocInt(6);
             
             //(vec3 position), (vec3 color)
-            g.vertices.put(-1) .put(1).put(0)     .put(1).put(0).put(0);
-            g.vertices. put(1) .put(1).put(0)     .put(1).put(0).put(0);
-            g.vertices .put(1).put(-1).put(0)     .put(1).put(0).put(0);
-            g.vertices.put(-1).put(-1).put(0)     .put(1).put(0).put(0);
+            g.vertices.put(-10).put(0).put(-10)     .put(0.1f).put(0.3f).put(0.6f);
+            g.vertices.put(-10).put(0) .put(10)     .put(0.1f).put(0.3f).put(0.6f);
+            g.vertices .put(10).put(0) .put(10)     .put(0.1f).put(0.3f).put(0.6f);
+            g.vertices. put(10).put(0).put(-10)     .put(0.1f).put(0.3f).put(0.6f);
             
             g.indices.put(0).put(1).put(2);
             g.indices.put(2).put(3).put(0);
@@ -52,14 +52,12 @@ class EntityGround extends Entity {
 
     @Override
     void render(GLProgram sceneProgram) {
-        glEnable(GL_DEPTH_TEST);
         glBindVertexArray(g.vao);
         
-        sceneProgram.setUniform("uType", 1);
+        sceneProgram.setUniform("uType", 0);
         sceneProgram.setUniform("uModel", false, g.modelMatrix);
         
         glDrawElements(GL_TRIANGLES, g.indices.capacity(), GL_UNSIGNED_INT, 0);
-        glDisable(GL_DEPTH_TEST);
         
         App.checkGLError();
     }

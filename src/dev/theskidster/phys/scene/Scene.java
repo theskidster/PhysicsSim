@@ -1,9 +1,12 @@
 package dev.theskidster.phys.scene;
 
 import dev.theskidster.phys.graphics.FreeTypeFont;
+import dev.theskidster.phys.main.Camera;
 import dev.theskidster.phys.main.GLProgram;
-import java.util.HashMap;
+import dev.theskidster.phys.main.Window;
+import java.util.LinkedHashMap;
 import java.util.Map;
+import org.joml.Vector3f;
 
 /**
  * @author J Hoffman
@@ -20,10 +23,12 @@ public abstract class Scene {
     
     public final String name;
     
-    private final Map<String, Entity> entityMap = new HashMap();
+    private final Map<String, Entity> entityMap = new LinkedHashMap();
+    
+    private static Camera camera;
     
     /**
-     * Constructs a new 3D space.
+     * Constructs a new 3D space. All resources that will be used by the scene should be initialized here.
      * 
      * @param name unique string that will be used to identify this scene
      */
@@ -72,6 +77,37 @@ public abstract class Scene {
     public static void updateViewport(int width, int height) {
         vpWidth  = width;
         vpHeight = height;
+    }
+    
+    /**
+     * Sets a reference to the applications {@linkplain dev.theskidster.phys.main.Camera Camera} object so we can manipulate its position and direction 
+     * within the scene.
+     * 
+     * @param reference the camera object initialized by the App class
+     */
+    public static void setCameraReference(Camera reference) {
+        camera = reference;
+    }
+    
+    /**
+     * Sets the initial position of the applications camera when it enters the scene.
+     * 
+     * @param x the cameras new position along the x-axis
+     * @param y the cameras new position along the y-axis
+     * @param z the cameras new position along the z-axis
+     */
+    final void setCameraPosition(float x, float y, float z) {
+        camera.setPosition(x, y, z);
+    }
+    
+    /**
+     * Sets the initial direction the applications camera will face when it enters the scene.
+     * 
+     * @param yaw   the left to right direction of the camera. Expects a value between -180 and 180 degrees.
+     * @param pitch the up and down direction of the camera. Expects a value between -90 and 90 degrees.
+     */
+    final void setCameraDirection(float yaw, float pitch) {
+        camera.setDirection(yaw, pitch, Window.getMouseX(), Window.getMouseY());
     }
     
     /**
