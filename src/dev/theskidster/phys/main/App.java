@@ -84,6 +84,8 @@ public final class App {
             sceneProgram.use();
             
             sceneProgram.addUniform(BufferType.INT,  "uType");
+            sceneProgram.addUniform(BufferType.VEC3, "uColor");
+            sceneProgram.addUniform(BufferType.MAT3, "uNormal");
             sceneProgram.addUniform(BufferType.MAT4, "uModel");
             sceneProgram.addUniform(BufferType.MAT4, "uView");
             sceneProgram.addUniform(BufferType.MAT4, "uProjection");

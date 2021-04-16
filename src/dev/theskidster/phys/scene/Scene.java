@@ -6,7 +6,6 @@ import dev.theskidster.phys.main.GLProgram;
 import dev.theskidster.phys.main.Window;
 import java.util.LinkedHashMap;
 import java.util.Map;
-import org.joml.Vector3f;
 
 /**
  * @author J Hoffman

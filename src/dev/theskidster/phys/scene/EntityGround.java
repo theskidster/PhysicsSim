@@ -24,10 +24,10 @@ class EntityGround extends Entity {
             g.indices  = stack.mallocInt(6);
             
             //(vec3 position), (vec3 color)
-            g.vertices.put(-10).put(0).put(-10)     .put(0.1f).put(0.3f).put(0.6f);
-            g.vertices.put(-10).put(0) .put(10)     .put(0.1f).put(0.3f).put(0.6f);
-            g.vertices .put(10).put(0) .put(10)     .put(0.1f).put(0.3f).put(0.6f);
-            g.vertices. put(10).put(0).put(-10)     .put(0.1f).put(0.3f).put(0.6f);
+            g.vertices.put(-100).put(0).put(-100)     .put(0.1f).put(0.3f).put(0.6f);
+            g.vertices.put(-100).put(0) .put(100)     .put(0.1f).put(0.3f).put(0.6f);
+            g.vertices .put(100).put(0) .put(100)     .put(0.1f).put(0.3f).put(0.6f);
+            g.vertices. put(100).put(0).put(-100)     .put(0.1f).put(0.3f).put(0.6f);
             
             g.indices.put(0).put(1).put(2);
             g.indices.put(2).put(3).put(0);

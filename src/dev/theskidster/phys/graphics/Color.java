@@ -13,6 +13,7 @@ import org.joml.Vector3f;
 public class Color {
 
     public static final Color WHITE = new Color(1);
+    public static final Color RED = new Color(255, 0, 0);
     
     public final float r;
     public final float g;

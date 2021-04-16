@@ -24,13 +24,10 @@ public class SceneGravityTest extends Scene {
         setCameraPosition(6, 4, 10);
         setCameraDirection(-120f, 20);
         
-        //https://www.alsprogrammingresource.com/basic_ode.html
-        //http://ode.org/wiki/index.php?title=Manual
-        //https://learnopengl.com/Advanced-Lighting/Shadows/Shadow-Mapping
-        
         //TODO: might bundle these together
         addEntity("ground", new EntityGround());
         addEntity("test", new EntityTest(new Vector3f(0, 1, -5)));
+        addEntity("cube", new EntityCube(new Vector3f(0, 6, 0), 1, 1, 1));
         OdeHelper.createPlane(dSpace, 0, 0, 1, 0);
         
         //TODO: drop cube on plane.
