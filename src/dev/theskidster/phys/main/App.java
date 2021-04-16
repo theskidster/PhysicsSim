@@ -202,7 +202,6 @@ public final class App {
     public static void setScene(Scene value) {
         if(scene != null) scene.exit();
         scene = value;
-        scene.enter();
         
         Logger.logInfo("Entered scene: \"" + scene.name + "\"");
     }

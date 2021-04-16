@@ -16,5 +16,10 @@ void main() {
             ioColor     = aColor;
             gl_Position = uProjection * uView * uModel * vec4(aPosition, 1);
             break;
+
+        case 1: //Used for the ground plane.
+            ioColor     = aColor;
+            gl_Position = uProjection * uView * uModel * vec4(aPosition, 1);
+            break;
     }
 }

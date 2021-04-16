@@ -32,12 +32,6 @@ public abstract class Scene {
     }
     
     /**
-     * Allocates all the resources needed by this scene. Called once before the {@linkplain update()} and {@linkplain render(GLProgram) render()} methods are 
-     * called.
-     */
-    public abstract void enter();
-    
-    /**
      * Renders the custom HUD provided by the scene. Used to relay scene-specific information to the user, such as the controls for moving an entity with the
      * keyboard.
      * 
@@ -86,7 +80,7 @@ public abstract class Scene {
      * @param name   the unique name that will be used to reference the entity being added
      * @param entity the entity to add to this scene
      */
-    void addEntity(String name, Entity entity) {
+    final void addEntity(String name, Entity entity) {
         entityMap.put(name, entity);
     }
     

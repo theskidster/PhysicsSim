@@ -92,6 +92,10 @@ final class Window {
         glfwSetScrollCallback(handle, (window, xOffset, yOffset) -> {
             camera.dolly((float) yOffset);
         });
+        
+        glfwSetKeyCallback(handle, (window, key, scancode, action, mods) -> {
+            //TODO: add command input mapping
+        });
     }
     
 }
