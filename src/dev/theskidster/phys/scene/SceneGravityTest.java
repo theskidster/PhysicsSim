@@ -4,9 +4,6 @@ import dev.theskidster.phys.graphics.Color;
 import dev.theskidster.phys.graphics.FreeTypeFont;
 import dev.theskidster.phys.main.GLProgram;
 import org.joml.Vector3f;
-import org.ode4j.ode.DSpace;
-import org.ode4j.ode.DWorld;
-import org.ode4j.ode.OdeHelper;
 
 /**
  * @author J Hoffman
@@ -14,21 +11,24 @@ import org.ode4j.ode.OdeHelper;
  */
 
 public class SceneGravityTest extends Scene {
-
-    private final DWorld dWorld = OdeHelper.createWorld();
-    private final DSpace dSpace = OdeHelper.createHashSpace(null);
     
     public SceneGravityTest() {
         super("Gravity Test");
         
         setCameraPosition(6, 4, 10);
-        setCameraDirection(-120f, 20);
+        setCameraDirection(-120, 20);
         
-        //TODO: might bundle these together
-        addEntity("ground", new EntityGround());
-        addEntity("test", new EntityTest(new Vector3f(0, 1, -5)));
-        addEntity("cube", new EntityCube(new Vector3f(0, 6, 0), 1, 1, 1));
-        OdeHelper.createPlane(dSpace, 0, 0, 1, 0);
+        dWorld.setGravity(0, -3, 0);
+        dWorld.setERP(0.2);
+        dWorld.setCFM(1e-5);
+        dWorld.setContactMaxCorrectingVel(0.9);
+        dWorld.setContactSurfaceLayer(0.001);
+        dWorld.setAutoDisableFlag(true);
+        
+        addEntity("ground", new EntityGround(0, 1, 0, 0, dWorld, dSpace));
+        addEntity("cube 1", new EntityCube(new Vector3f(0, 6, 0), 1, 1, 1, dWorld, dSpace));
+        addEntity("cube 2", new EntityCube(new Vector3f(0.5f, 10, 0), 1, 1, 1, dWorld, dSpace));
+        addEntity("cube 3", new EntityCube(new Vector3f(0, 12, 0.7f), 1, 1, 1, dWorld, dSpace));
         
         //TODO: drop cube on plane.
     }

@@ -12,6 +12,7 @@ import java.util.LinkedList;
 import static org.lwjgl.glfw.GLFW.*;
 import org.lwjgl.opengl.GL;
 import static org.lwjgl.opengl.GL20.*;
+import org.ode4j.ode.OdeHelper;
 
 /**
  * @author J Hoffman
@@ -108,6 +109,7 @@ public final class App {
         hud    = new HUD(cwd);
         camera = new Camera();
         Scene.setCameraReference(camera);
+        OdeHelper.initODE2(0);
     }
     
     /**
@@ -165,6 +167,7 @@ public final class App {
         }
         
         GL.destroy();
+        OdeHelper.closeODE();
         glfwTerminate();
     }
     

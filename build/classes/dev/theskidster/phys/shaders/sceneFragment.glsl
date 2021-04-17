@@ -15,12 +15,13 @@ void main() {
             break;
 
         case 1: //Used for cube entities.
-            vec3 lightPos = vec3(2, 4, 1);
+            vec3 lightPos = vec3(1, 4, 2.5);
             vec3 lightDir = normalize(lightPos);
-            vec3 norm     = normalize(ioNormal);
-            float diff    = max(dot(norm, lightDir), -0.4);
-            vec3 diffuse  = ioColor * diff;
-
+            
+            vec3 norm    = normalize(ioNormal);
+            float diff   = max(dot(norm, lightDir), -0.6);
+            vec3 diffuse = (diff * ioColor * ioColor) + 0.3;
+            
             ioResult = vec4(ioColor + diffuse, 1) * 0.5;
             break;
     }
