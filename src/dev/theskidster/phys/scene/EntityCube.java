@@ -5,13 +5,10 @@ import dev.theskidster.phys.graphics.Cube;
 import dev.theskidster.phys.graphics.Graphics;
 import dev.theskidster.phys.main.App;
 import dev.theskidster.phys.main.GLProgram;
-import java.util.Arrays;
-import org.joml.AxisAngle4f;
 import org.joml.Matrix3f;
 import org.joml.Vector3f;
 import static org.lwjgl.opengl.GL30.*;
 import org.ode4j.math.DMatrix3;
-import org.ode4j.math.DMatrix3C;
 import org.ode4j.ode.DBody;
 import org.ode4j.ode.DGeom;
 import org.ode4j.ode.DMass;
@@ -34,9 +31,6 @@ public class EntityCube extends Entity {
     
     private final Graphics g      = new Graphics();
     private final Matrix3f normal = new Matrix3f();
-    
-    private final Matrix3f rotation = new Matrix3f();
-    private final AxisAngle4f axisAngle = new AxisAngle4f();
     
     public Color color = Color.WHITE;
     

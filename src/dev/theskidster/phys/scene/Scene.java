@@ -57,8 +57,6 @@ public abstract class Scene {
     private final DNearCallback nearCallback = new DNearCallback() {
         @Override
         public void call(Object data, DGeom o1, DGeom o2) {
-            int i;
-            
             DBody body1 = o1.getBody();
             DBody body2 = o2.getBody();
             
@@ -68,17 +66,17 @@ public abstract class Scene {
             
             DContactBuffer contacts = new DContactBuffer(MAX_CONTACTS);
             for(DContact contact : contacts) {
-                contact.surface.mode = dContactBounce | dContactSoftCFM;
-                contact.surface.mu = dInfinity;
-                contact.surface.mu2 = 0;
-                contact.surface.bounce = 0.01;
+                contact.surface.mode       = dContactBounce | dContactSoftCFM;
+                contact.surface.mu         = dInfinity;
+                contact.surface.mu2        = 0;
+                contact.surface.bounce     = 0.01;
                 contact.surface.bounce_vel = 0.1;
-                contact.surface.soft_cfm = 0.01;
+                contact.surface.soft_cfm   = 0.01;
             }
             
             int numContacts = OdeHelper.collide(o1, o2, MAX_CONTACTS, contacts.getGeomBuffer());
             if(numContacts != 0) {
-                for(i = 0; i < numContacts; i++) {
+                for(int i = 0; i < numContacts; i++) {
                     DJoint contactPoint = OdeHelper.createContactJoint(dWorld, dJointGroup, contacts.get(i));
                     contactPoint.attach(body1, body2);
                 }

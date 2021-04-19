@@ -29,8 +29,6 @@ public class SceneGravityTest extends Scene {
         addEntity("cube 1", new EntityCube(new Vector3f(0, 6, 0), 1, 1, 1, dWorld, dSpace));
         addEntity("cube 2", new EntityCube(new Vector3f(0.5f, 10, 0), 1, 1, 1, dWorld, dSpace));
         addEntity("cube 3", new EntityCube(new Vector3f(0, 12, 0.7f), 1, 1, 1, dWorld, dSpace));
-        
-        //TODO: drop cube on plane.
     }
 
     @Override
@@ -40,6 +38,7 @@ public class SceneGravityTest extends Scene {
     
     @Override
     public void exit() {
+        //TODO: free resources
     }
 
 }
