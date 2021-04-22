@@ -1,11 +1,8 @@
-package dev.theskidster.phys.graphics;
+package dev.theskidster.phys.main;
 
 import com.mlomb.freetypejni.Face;
 import static com.mlomb.freetypejni.FreeTypeConstants.FT_LOAD_RENDER;
 import com.mlomb.freetypejni.Library;
-import dev.theskidster.phys.main.App;
-import dev.theskidster.phys.main.GLProgram;
-import dev.theskidster.phys.main.Logger;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.FloatBuffer;
@@ -51,7 +48,7 @@ public final class FreeTypeFont {
      * @param filename the name of the font file to parse. Extension is expected.
      * @param size     the desired size of the font in pixels
      */
-    public FreeTypeFont(Library freeType, String filename, int size) {
+    FreeTypeFont(Library freeType, String filename, int size) {
         String filepath = "/dev/theskidster/" + App.DOMAIN + "/assets/" + filename;
         
         try(InputStream file = FreeTypeFont.class.getResourceAsStream(filepath)) {

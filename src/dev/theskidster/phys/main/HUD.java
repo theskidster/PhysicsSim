@@ -2,7 +2,6 @@ package dev.theskidster.phys.main;
 
 import com.mlomb.freetypejni.FreeType;
 import com.mlomb.freetypejni.Library;
-import dev.theskidster.phys.graphics.FreeTypeFont;
 import org.joml.Matrix4f;
 
 /**

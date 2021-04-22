@@ -1,8 +1,6 @@
 package dev.theskidster.phys.scene;
 
-import dev.theskidster.phys.graphics.Color;
-import dev.theskidster.phys.graphics.Cube;
-import dev.theskidster.phys.graphics.Graphics;
+import dev.theskidster.phys.main.Color;
 import dev.theskidster.phys.main.App;
 import dev.theskidster.phys.main.GLProgram;
 import org.joml.Matrix3f;
@@ -30,7 +28,6 @@ public class EntityCube extends Entity {
     DGeom dGeom;
     DMass dMass;
     
-    private final Graphics g      = new Graphics();
     private final Matrix3f normal = new Matrix3f();
     
     public Color color = Color.WHITE;
@@ -57,14 +54,63 @@ public class EntityCube extends Entity {
         dGeom = OdeHelper.createBox(dSpace, width, height, depth);
         dGeom.setBody(dBody);
         
-        Cube cube  = new Cube(width, height, depth);
-        g.vertices = cube.vertices;
-        g.indices  = cube.indices;
+        float w = width / 2;
+        float h = height / 2;
+        float d = depth / 2;
         
-        g.bindBuffers();
+        vertices = MemoryUtil.memAllocFloat(144);
+        indices  = MemoryUtil.memAllocInt(36);
         
-        MemoryUtil.memFree(g.vertices);
-        MemoryUtil.memFree(g.indices);
+        //Front
+        vertices.put(-w) .put(h).put(-d).put(0).put(0).put(-1);   //0
+        vertices .put(w) .put(h).put(-d).put(0).put(0).put(-1);   //1
+        vertices .put(w).put(-h).put(-d).put(0).put(0).put(-1);   //2
+        vertices.put(-w).put(-h).put(-d).put(0).put(0).put(-1);   //3
+        
+        //Back
+        vertices .put(w) .put(h).put(d).put(0).put(0).put(1);     //4
+        vertices.put(-w) .put(h).put(d).put(0).put(0).put(1);     //5
+        vertices.put(-w).put(-h).put(d).put(0).put(0).put(1);     //6
+        vertices .put(w).put(-h).put(d).put(0).put(0).put(1);     //7
+        
+        //Top
+        vertices.put(-w).put(h) .put(d).put(0).put(1).put(0);     //8
+        vertices .put(w).put(h) .put(d).put(0).put(1).put(0);     //9
+        vertices .put(w).put(h).put(-d).put(0).put(1).put(0);     //10
+        vertices.put(-w).put(h).put(-d).put(0).put(1).put(0);     //11
+        
+        //Bottom
+        vertices.put(-w).put(-h).put(-d).put(0).put(-1).put(0);   //12
+        vertices .put(w).put(-h).put(-d).put(0).put(-1).put(0);   //13
+        vertices .put(w).put(-h) .put(d).put(0).put(-1).put(0);   //14
+        vertices.put(-w).put(-h) .put(d).put(0).put(-1).put(0);   //15
+        
+        //Left
+        vertices.put(-w) .put(h) .put(d).put(-1).put(0).put(0);   //16
+        vertices.put(-w) .put(h).put(-d).put(-1).put(0).put(0);   //17
+        vertices.put(-w).put(-h).put(-d).put(-1).put(0).put(0);   //18
+        vertices.put(-w).put(-h) .put(d).put(-1).put(0).put(0);   //19
+        
+        //Right
+        vertices.put(w) .put(h).put(-d).put(1).put(0).put(0);     //20
+        vertices.put(w) .put(h) .put(d).put(1).put(0).put(0);     //21
+        vertices.put(w).put(-h) .put(d).put(1).put(0).put(0);     //22
+        vertices.put(w).put(-h).put(-d).put(1).put(0).put(0);     //23
+        
+        indices.put(0).put(1).put(2).put(2).put(3).put(0);       //Front
+        indices.put(4).put(5).put(6).put(6).put(7).put(4);       //Back
+        indices.put(8).put(9).put(10).put(10).put(11).put(8);    //Top
+        indices.put(12).put(13).put(14).put(14).put(15).put(12); //Bottom
+        indices.put(16).put(17).put(18).put(18).put(19).put(16); //Left
+        indices.put(20).put(21).put(22).put(22).put(23).put(20); //Right
+        
+        vertices.flip();
+        indices.flip();
+        
+        bindBuffers();
+        
+        MemoryUtil.memFree(vertices);
+        MemoryUtil.memFree(indices);
         
         glVertexAttribPointer(0, 3, GL_FLOAT, false, (6 * Float.BYTES), 0);
         glVertexAttribPointer(2, 3, GL_FLOAT, false, (6 * Float.BYTES), (3 * Float.BYTES));
@@ -79,8 +125,8 @@ public class EntityCube extends Entity {
         position.y = (float) (dGeom.getPosition().get1());
         position.z = (float) (dGeom.getPosition().get2());
         
-        normal.set(g.modelMatrix.invert());
-        g.modelMatrix.translation(position);
+        normal.set(modelMatrix.invert());
+        modelMatrix.translation(position);
         
         float[] rotArray = dGeom.getRotation().toFloatArray12();
         
@@ -88,32 +134,32 @@ public class EntityCube extends Entity {
         Couldnt figure out how to make this play nice- so we'll just have to
         deal with it for now.
         */
-        g.modelMatrix.m00(rotArray[0]);
-        g.modelMatrix.m01(rotArray[4]);
-        g.modelMatrix.m02(rotArray[8]);
-        g.modelMatrix.m03(0);
-        g.modelMatrix.m10(rotArray[1]);
-        g.modelMatrix.m11(rotArray[5]);
-        g.modelMatrix.m12(rotArray[9]);
-        g.modelMatrix.m13(0);
-        g.modelMatrix.m20(rotArray[2]);
-        g.modelMatrix.m21(rotArray[6]);
-        g.modelMatrix.m22(rotArray[10]);
-        g.modelMatrix.m23(0);
+        modelMatrix.m00(rotArray[0]);
+        modelMatrix.m01(rotArray[4]);
+        modelMatrix.m02(rotArray[8]);
+        modelMatrix.m03(0);
+        modelMatrix.m10(rotArray[1]);
+        modelMatrix.m11(rotArray[5]);
+        modelMatrix.m12(rotArray[9]);
+        modelMatrix.m13(0);
+        modelMatrix.m20(rotArray[2]);
+        modelMatrix.m21(rotArray[6]);
+        modelMatrix.m22(rotArray[10]);
+        modelMatrix.m23(0);
     }
 
     @Override
     void render(GLProgram sceneProgram) {
         glEnable(GL_DEPTH_TEST);
         glEnable(GL_CULL_FACE);
-        glBindVertexArray(g.vao);
+        glBindVertexArray(vao);
         
         sceneProgram.setUniform("uType", 1);
         sceneProgram.setUniform("uColor", color.asVec3());
         sceneProgram.setUniform("uNormal", true, normal);
-        sceneProgram.setUniform("uModel", false, g.modelMatrix);
+        sceneProgram.setUniform("uModel", false, modelMatrix);
         
-        glDrawElements(GL_TRIANGLES, g.indices.capacity(), GL_UNSIGNED_INT, 0);
+        glDrawElements(GL_TRIANGLES, indices.capacity(), GL_UNSIGNED_INT, 0);
         glDisable(GL_CULL_FACE);
         glDisable(GL_DEPTH_TEST);
         
@@ -122,6 +168,7 @@ public class EntityCube extends Entity {
 
     @Override
     void destroy() {
+        freeBuffers();
     }
 
 }

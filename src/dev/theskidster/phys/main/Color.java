@@ -1,4 +1,4 @@
-package dev.theskidster.phys.graphics;
+package dev.theskidster.phys.main;
 
 import org.joml.Vector3f;
 

@@ -1,7 +1,20 @@
 package dev.theskidster.phys.scene;
 
 import dev.theskidster.phys.main.GLProgram;
+import java.nio.FloatBuffer;
+import java.nio.IntBuffer;
+import org.joml.Matrix4f;
 import org.joml.Vector3f;
+import static org.lwjgl.opengl.GL15.GL_ARRAY_BUFFER;
+import static org.lwjgl.opengl.GL15.GL_ELEMENT_ARRAY_BUFFER;
+import static org.lwjgl.opengl.GL15.GL_STATIC_DRAW;
+import static org.lwjgl.opengl.GL15.glBindBuffer;
+import static org.lwjgl.opengl.GL15.glBufferData;
+import static org.lwjgl.opengl.GL15.glDeleteBuffers;
+import static org.lwjgl.opengl.GL15.glGenBuffers;
+import static org.lwjgl.opengl.GL30.glBindVertexArray;
+import static org.lwjgl.opengl.GL30.glDeleteVertexArrays;
+import static org.lwjgl.opengl.GL30.glGenVertexArrays;
 
 /**
  * @author J Hoffman
@@ -13,6 +26,15 @@ import org.joml.Vector3f;
  */
 abstract class Entity {
 
+    protected final int vao = glGenVertexArrays();
+    private final int vbo = glGenBuffers();
+    private final int ibo = glGenBuffers();
+    
+    protected FloatBuffer vertices;
+    protected IntBuffer indices;
+    
+    protected Matrix4f modelMatrix = new Matrix4f();
+    
     private boolean remove;
     
     Vector3f position;
@@ -24,6 +46,32 @@ abstract class Entity {
      */
     Entity(Vector3f position) {
         this.position = position;
+    }
+    
+    /**
+     * Convenience method provided to bind the default buffers initialized in this object. Implementing classes are expected to define vertex attribute 
+     * layouts following this call in their constructors with methods like 
+     * {@linkplain org.lwjgl.opengl.GL30#glVertexAttribPointer(int, int, int, boolean, int, java.nio.ByteBuffer) glVertexAttribPointer()}.
+     */
+    protected final void bindBuffers() {
+        glBindVertexArray(vao);
+        
+        glBindBuffer(GL_ARRAY_BUFFER, vbo);
+        glBufferData(GL_ARRAY_BUFFER, vertices, GL_STATIC_DRAW);
+        
+        if(indices != null) {
+            glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo);
+            glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices, GL_STATIC_DRAW);
+        }
+    }
+    
+    /**
+     * Convenience method which frees the default buffer objects initialized by this object.
+     */
+    protected void freeBuffers() {
+        glDeleteVertexArrays(vao);
+        glDeleteBuffers(vbo);
+        glDeleteBuffers(ibo);
     }
     
     /**
@@ -42,7 +90,7 @@ abstract class Entity {
     
     /**
      * Used to free all of the resources allocated by this entity once it is no longer needed. Calls to methods like 
-     * {@linkplain dev.theskidster.phys.graphics.Graphics#freeBuffers() Graphics.freeBuffers()} should be made here.
+     * {@link freeBuffers()} should be made here.
      */
     abstract void destroy();
     
