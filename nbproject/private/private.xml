@@ -5,7 +5,7 @@
             <url>src/dev/theskidster/phys/shaders/sceneFragment.glsl</url>
             <bookmark id="5">
                 <name/>
-                <line>10</line>
+                <line>21</line>
                 <key/>
             </bookmark>
         </file>
@@ -19,12 +19,6 @@
         </file>
     </editor-bookmarks>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group>
-            <file>file:/C:/Users/thesk/Documents/Testbed/collision/PhysicsSim/src/dev/theskidster/phys/scene/Scene.java</file>
-            <file>file:/C:/Users/thesk/Documents/Testbed/collision/PhysicsSim/src/dev/theskidster/phys/scene/EntityGround.java</file>
-            <file>file:/C:/Users/thesk/Documents/Testbed/collision/PhysicsSim/src/dev/theskidster/phys/scene/EntityCube.java</file>
-            <file>file:/C:/Users/thesk/Documents/Testbed/collision/PhysicsSim/src/dev/theskidster/phys/scene/SceneGravityTest.java</file>
-            <file>file:/C:/Users/thesk/Documents/Testbed/collision/PhysicsSim/src/dev/theskidster/phys/scene/Entity.java</file>
-        </group>
+        <group/>
     </open-files>
 </project-private>

@@ -8,6 +8,7 @@ import dev.theskidster.phys.main.GLProgram;
 import org.joml.Matrix3f;
 import org.joml.Vector3f;
 import static org.lwjgl.opengl.GL30.*;
+import org.lwjgl.system.MemoryUtil;
 import org.ode4j.math.DMatrix3;
 import org.ode4j.ode.DBody;
 import org.ode4j.ode.DGeom;
@@ -61,6 +62,9 @@ public class EntityCube extends Entity {
         g.indices  = cube.indices;
         
         g.bindBuffers();
+        
+        MemoryUtil.memFree(g.vertices);
+        MemoryUtil.memFree(g.indices);
         
         glVertexAttribPointer(0, 3, GL_FLOAT, false, (6 * Float.BYTES), 0);
         glVertexAttribPointer(2, 3, GL_FLOAT, false, (6 * Float.BYTES), (3 * Float.BYTES));

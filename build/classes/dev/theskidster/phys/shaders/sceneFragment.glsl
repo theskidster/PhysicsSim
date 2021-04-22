@@ -8,9 +8,6 @@ uniform int uType;
 
 out vec4 ioResult;
 
-//TODO: add shadows https://learnopengl.com/Advanced-Lighting/Shadows/Shadow-Mapping
-//Change version number to 1.0.0
-
 void main() {
     switch(uType) {
         case 0:
