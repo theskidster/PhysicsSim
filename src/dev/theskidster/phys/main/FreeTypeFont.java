@@ -3,6 +3,7 @@ package dev.theskidster.phys.main;
 import com.mlomb.freetypejni.Face;
 import static com.mlomb.freetypejni.FreeTypeConstants.FT_LOAD_RENDER;
 import com.mlomb.freetypejni.Library;
+import dev.theskidster.jlogger.JLogger;
 import dev.theskidster.shadercore.GLProgram;
 import java.io.IOException;
 import java.io.InputStream;
@@ -67,7 +68,7 @@ public final class FreeTypeFont {
             glEnableVertexAttribArray(1);
             
         } catch(Exception e) {
-            Logger.logSevere("Failed to load font: \"" + filename + "\"", e);
+            JLogger.logSevere("Failed to load font: \"" + filename + "\"", e);
         }
     }
     
@@ -118,7 +119,7 @@ public final class FreeTypeFont {
             face.delete();
             
         } catch(IOException e) {
-            Logger.logSevere("Failed to parse font data from ttf file", e);
+            JLogger.logSevere("Failed to parse font data from ttf file", e);
         }
     }
     

@@ -1,5 +1,6 @@
 package dev.theskidster.phys.main;
 
+import dev.theskidster.jlogger.JLogger;
 import dev.theskidster.phys.scene.Scene;
 import dev.theskidster.phys.scene.SceneGravityTest;
 import dev.theskidster.shadercore.BufferType;
@@ -46,14 +47,14 @@ public final class App {
      */
     App() {
         if(!glfwInit()) {
-            Logger.logSevere("Failed to initialize GLFW.", null);
+            JLogger.logSevere("Failed to initialize GLFW.", null);
         }
         
         if(!System.getProperty("os.name").toLowerCase().contains("win")) {
-            Logger.logSevere("Unsupported operating system. Use a 64 bit Windows system.", null);
+            JLogger.logSevere("Unsupported operating system. Use a 64 bit Windows system.", null);
         } else {
             if(!System.getProperty("os.arch").contains("64")) {
-                Logger.logSevere("Unsupported architecture. Windows system must be 64 bit.", null);
+                JLogger.logSevere("Unsupported architecture. Windows system must be 64 bit.", null);
             }
         }
         
@@ -62,6 +63,15 @@ public final class App {
         
         glfwMakeContextCurrent(window.handle);
         GL.createCapabilities();
+        
+        JLogger.newHorizontalLine();
+        JLogger.logInfo("OS NAME:\t\t" + System.getProperty("os.name"));
+        JLogger.logInfo("JAVA VERSION:\t" + System.getProperty("java.version"));
+        JLogger.logInfo("GLFW VERSION:\t" + glfwGetVersionString());
+        JLogger.logInfo("OPENGL VERSION:\t" + glGetString(GL_VERSION));
+        JLogger.logInfo("APP VERSION:\t" + VERSION);
+        JLogger.newHorizontalLine();
+        JLogger.newLine();
         
         ShaderCore.setFilepath("/dev/theskidster/phys/shaders/");
         
@@ -109,7 +119,7 @@ public final class App {
             InputStream source = App.class.getResourceAsStream("/dev/theskidster/" + DOMAIN + "/assets/freetype-jni-64.dll");
             Files.copy(source, Paths.get(cwd), StandardCopyOption.REPLACE_EXISTING);
         } catch (IOException e) {
-            Logger.logSevere("failed to copy dll file", e);
+            JLogger.logSevere("failed to copy dll file", e);
         }
         
         hud    = new HUD(cwd);
@@ -122,7 +132,6 @@ public final class App {
      * Exposes window and starts the applications main logic loop.
      */
     void start() {
-        Logger.logSystemInfo();
         setScene(new SceneGravityTest());
         window.show(monitor, hud, camera);
         
@@ -202,7 +211,7 @@ public final class App {
                 case GL_OUT_OF_MEMORY     -> desc = "out of memory";
             }
             
-            Logger.logSevere("OpenGL Error: (" + glError + ") " + desc, null);
+            JLogger.logSevere("OpenGL Error: (" + glError + ") " + desc, null);
         }
     }
     
@@ -215,7 +224,7 @@ public final class App {
         if(scene != null) scene.exit();
         scene = value;
         
-        Logger.logInfo("Entered scene: \"" + scene.name + "\"");
+        JLogger.logInfo("Entered scene: \"" + scene.name + "\"");
     }
     
 }
