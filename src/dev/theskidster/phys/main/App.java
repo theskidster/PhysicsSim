@@ -2,6 +2,10 @@ package dev.theskidster.phys.main;
 
 import dev.theskidster.phys.scene.Scene;
 import dev.theskidster.phys.scene.SceneGravityTest;
+import dev.theskidster.shadercore.BufferType;
+import dev.theskidster.shadercore.GLProgram;
+import dev.theskidster.shadercore.Shader;
+import dev.theskidster.shadercore.ShaderCore;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
@@ -58,6 +62,8 @@ public final class App {
         
         glfwMakeContextCurrent(window.handle);
         GL.createCapabilities();
+        
+        ShaderCore.setFilepath("/dev/theskidster/phys/shaders/");
         
         //Establish the shader for the applications heads up display (hud).
         {

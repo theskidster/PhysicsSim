@@ -1,20 +1,11 @@
 package dev.theskidster.phys.scene;
 
-import dev.theskidster.phys.main.GLProgram;
+import dev.theskidster.shadercore.GLProgram;
 import java.nio.FloatBuffer;
 import java.nio.IntBuffer;
 import org.joml.Matrix4f;
 import org.joml.Vector3f;
-import static org.lwjgl.opengl.GL15.GL_ARRAY_BUFFER;
-import static org.lwjgl.opengl.GL15.GL_ELEMENT_ARRAY_BUFFER;
-import static org.lwjgl.opengl.GL15.GL_STATIC_DRAW;
-import static org.lwjgl.opengl.GL15.glBindBuffer;
-import static org.lwjgl.opengl.GL15.glBufferData;
-import static org.lwjgl.opengl.GL15.glDeleteBuffers;
-import static org.lwjgl.opengl.GL15.glGenBuffers;
-import static org.lwjgl.opengl.GL30.glBindVertexArray;
-import static org.lwjgl.opengl.GL30.glDeleteVertexArrays;
-import static org.lwjgl.opengl.GL30.glGenVertexArrays;
+import static org.lwjgl.opengl.GL30.*;
 
 /**
  * @author J Hoffman
@@ -27,8 +18,8 @@ import static org.lwjgl.opengl.GL30.glGenVertexArrays;
 abstract class Entity {
 
     protected final int vao = glGenVertexArrays();
-    private final int vbo = glGenBuffers();
-    private final int ibo = glGenBuffers();
+    private final int vbo   = glGenBuffers();
+    private final int ibo   = glGenBuffers();
     
     protected FloatBuffer vertices;
     protected IntBuffer indices;

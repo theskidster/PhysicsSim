@@ -3,6 +3,7 @@ package dev.theskidster.phys.main;
 import com.mlomb.freetypejni.Face;
 import static com.mlomb.freetypejni.FreeTypeConstants.FT_LOAD_RENDER;
 import com.mlomb.freetypejni.Library;
+import dev.theskidster.shadercore.GLProgram;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.FloatBuffer;

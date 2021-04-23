@@ -10,6 +10,10 @@ out vec4 ioResult;
 
 void main() {
     switch(uType) {
+        case 2: //TODO: change to 0
+            
+            break;
+
         case 0:
             ioResult = vec4(ioColor, 0);
             break;

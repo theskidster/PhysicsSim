@@ -2,8 +2,8 @@ package dev.theskidster.phys.scene;
 
 import dev.theskidster.phys.main.FreeTypeFont;
 import dev.theskidster.phys.main.Camera;
-import dev.theskidster.phys.main.GLProgram;
 import dev.theskidster.phys.main.Window;
+import dev.theskidster.shadercore.GLProgram;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import org.ode4j.ode.DBody;

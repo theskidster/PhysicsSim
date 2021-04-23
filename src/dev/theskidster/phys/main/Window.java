@@ -102,8 +102,6 @@ public final class Window {
         
         glfwSetKeyCallback(handle, (window, key, scancode, action, mods) -> {
             //TODO: add command input mapping
-            
-            if(key == GLFW_KEY_SPACE && action == GLFW_PRESS) App.setScene(new SceneGravityTest());
         });
     }
     

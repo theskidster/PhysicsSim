@@ -1,5 +1,6 @@
 package dev.theskidster.phys.main;
 
+import dev.theskidster.shadercore.GLProgram;
 import org.joml.Matrix4f;
 import org.joml.Vector3f;
 

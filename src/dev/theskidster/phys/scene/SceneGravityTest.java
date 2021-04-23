@@ -2,7 +2,7 @@ package dev.theskidster.phys.scene;
 
 import dev.theskidster.phys.main.Color;
 import dev.theskidster.phys.main.FreeTypeFont;
-import dev.theskidster.phys.main.GLProgram;
+import dev.theskidster.shadercore.GLProgram;
 import org.joml.Vector3f;
 
 /**

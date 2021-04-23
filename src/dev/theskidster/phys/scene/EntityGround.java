@@ -1,7 +1,7 @@
 package dev.theskidster.phys.scene;
 
 import dev.theskidster.phys.main.App;
-import dev.theskidster.phys.main.GLProgram;
+import dev.theskidster.shadercore.GLProgram;
 import org.joml.Vector3f;
 import static org.lwjgl.opengl.GL30.*;
 import org.lwjgl.system.MemoryStack;
