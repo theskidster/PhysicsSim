@@ -39,8 +39,8 @@ public class SceneGravityTest extends Scene {
         addEntity("cube 11", new EntityCube(new Vector3f(1, 3, 0.9f), 1, 1, 1, dWorld, dSpace));
         addEntity("cube 12", new EntityCube(new Vector3f(1, 3, 0.9f), 1, 1, 1, dWorld, dSpace));
         addEntity("cube 13", new EntityCube(new Vector3f(1, 3, 0.9f), 1, 1, 1, dWorld, dSpace));
-        addEntity("cube 14", new EntityCube(new Vector3f(1, 3, 0.9f), 1, 1, 1, dWorld, dSpace));
-        addEntity("cube 15", new EntityCube(new Vector3f(1, 3, 0.9f), 1, 1, 1, dWorld, dSpace));
+        addEntity("cube 14", new EntityCube(new Vector3f(1, 3.5f, 0.7f), 1, 1, 1, dWorld, dSpace));
+        addEntity("cube 15", new EntityCube(new Vector3f(1, 3.5f, 0.9f), 1, 1, 1, dWorld, dSpace));
     }
 
     @Override
