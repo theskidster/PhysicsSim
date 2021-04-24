@@ -12,17 +12,20 @@ import static org.lwjgl.system.MemoryUtil.NULL;
  * Created: Apr 23, 2021
  */
 
+/**
+ * <a href="https://en.wikipedia.org/wiki/Shadow_mapping">Don't feel like explaining this one.</a>
+ */
 class ShadowMap {
 
-    private final int SHADOW_WIDTH  = 2048;
-    private final int SHADOW_HEIGHT = 2048;
+    private final int SHADOW_WIDTH  = 2560;
+    private final int SHADOW_HEIGHT = 2560;
     private final int fbo;
     final int depthTexHandle;
     
     private final float NEAR_PLANE = 1f;
     private final float FAR_PLANE  = 100f;
     
-    final Vector3f lightPos = new Vector3f(3, 6, 1);
+    final Vector3f lightPos = new Vector3f(16, 26, 14);
     private final Vector3f lightDir = new Vector3f();
     
     private final Matrix4f lightView = new Matrix4f();

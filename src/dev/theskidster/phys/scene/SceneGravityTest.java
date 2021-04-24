@@ -29,6 +29,18 @@ public class SceneGravityTest extends Scene {
         addEntity("cube 1", new EntityCube(new Vector3f(0, 6, 0), 1, 1, 1, dWorld, dSpace));
         addEntity("cube 2", new EntityCube(new Vector3f(0.5f, 10, 0), 1, 1, 1, dWorld, dSpace));
         addEntity("cube 3", new EntityCube(new Vector3f(0, 12, 0.7f), 1, 1, 1, dWorld, dSpace));
+        addEntity("cube 4", new EntityCube(new Vector3f(0, 6, 4f), 1, 1, 1, dWorld, dSpace));
+        addEntity("cube 5", new EntityCube(new Vector3f(0, 2, 4f), 1, 1, 1, dWorld, dSpace));
+        addEntity("cube 6", new EntityCube(new Vector3f(2, 12, 0.7f), 1, 1, 1, dWorld, dSpace));
+        addEntity("cube 7", new EntityCube(new Vector3f(2.5f, 6, 0.7f), 1, 1, 1, dWorld, dSpace));
+        addEntity("cube 8", new EntityCube(new Vector3f(1, 3, 0.9f), 1, 1, 1, dWorld, dSpace));
+        addEntity("cube 9", new EntityCube(new Vector3f(1, 3, 0.9f), 1, 1, 1, dWorld, dSpace));
+        addEntity("cube 10", new EntityCube(new Vector3f(1, 3, 0.9f), 1, 1, 1, dWorld, dSpace));
+        addEntity("cube 11", new EntityCube(new Vector3f(1, 3, 0.9f), 1, 1, 1, dWorld, dSpace));
+        addEntity("cube 12", new EntityCube(new Vector3f(1, 3, 0.9f), 1, 1, 1, dWorld, dSpace));
+        addEntity("cube 13", new EntityCube(new Vector3f(1, 3, 0.9f), 1, 1, 1, dWorld, dSpace));
+        addEntity("cube 14", new EntityCube(new Vector3f(1, 3, 0.9f), 1, 1, 1, dWorld, dSpace));
+        addEntity("cube 15", new EntityCube(new Vector3f(1, 3, 0.9f), 1, 1, 1, dWorld, dSpace));
     }
 
     @Override

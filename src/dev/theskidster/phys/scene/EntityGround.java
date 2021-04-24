@@ -39,10 +39,10 @@ class EntityGround extends Entity {
             indices  = stack.mallocInt(6);
             
             //(vec3 position), (vec3 normal)
-            vertices.put(-100).put(0).put(-100)     .put(0).put(1).put(0);
-            vertices.put(-100).put(0) .put(100)     .put(0).put(1).put(0);
-            vertices .put(100).put(0) .put(100)     .put(0).put(1).put(0);
-            vertices. put(100).put(0).put(-100)     .put(0).put(1).put(0);
+            vertices.put(-50).put(0).put(-50)     .put(0).put(1).put(0);
+            vertices.put(-50).put(0) .put(50)     .put(0).put(1).put(0);
+            vertices .put(50).put(0) .put(50)     .put(0).put(1).put(0);
+            vertices. put(50).put(0).put(-50)     .put(0).put(1).put(0);
             
             indices.put(0).put(1).put(2);
             indices.put(2).put(3).put(0);

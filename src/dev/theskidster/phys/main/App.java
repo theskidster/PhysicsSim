@@ -171,6 +171,8 @@ public final class App {
             prevTime = currTime;
             ticked   = false;
             
+            //TODO: add metrics for hud
+            
             while(delta >= TARGET_DELTA) {
                 delta -= TARGET_DELTA;
                 ticked = true;

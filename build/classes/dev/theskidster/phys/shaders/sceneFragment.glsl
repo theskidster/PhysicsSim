@@ -19,43 +19,43 @@ float calcShadow(float dotLightNormal) {
 
     float depth = texture(uShadowMap, pos.xy).r;
 
-    float bias = max(0.05 * (1 - dotLightNormal), 0.005);
+    float bias = max(0.009 * (1 - dotLightNormal), 0.0003);
     return (depth + bias) < pos.z ? 0 : 1;
+}
 
-    //return depth < pos.z ? 0 : 1;
+/**
+ * Use this to view the frustrum of the shadow map.
+ */
+float calcShowShadow(float dotLightNormal) {
+    vec3 pos = ioLightFrag.xyz * 0.5 + 0.5;
+    if(pos.z > 1) pos.z = 1;
+    float depth = texture(uShadowMap, pos.xy).r;
+
+    return depth < pos.z ? 0 : 1;
 }
 
 void main() {
     switch(uType) {
-        case 0: case 1:
-            vec3 lightPos = vec3(uLightPos);
+        case 0: case 1: 
+            //Normally I'd supply this via light struct- but theres only one so whatever.
+            float lightBrightness = 0.25;
+            vec3 lightPos         = vec3(uLightPos);
+            vec3 lightDir         = normalize(lightPos);
             
-            vec3 ambient = 0.3 * ioColor;
-            
+            //Calculate output from world light source.
             vec3 norm    = normalize(ioNormal);
-            float diff   = max(dot(norm, normalize(lightPos)), -0.6);
-            vec3 diffuse = (diff * ioColor * ioColor);
-            
-            vec3 lightDir = normalize(lightPos - ioFragPos);
+            float diff   = max(dot(norm, lightDir), 0);
+            vec3 diffuse = diff * ioColor * ioColor;
+            vec3 ambient = (ioColor + diffuse) * lightBrightness;
+
+            //vec3 ambient = 0.3 * ioColor;
+
+            //Calculate shadows.
             float dotLightNormal = dot(lightDir, norm);
-
-            float shadow  = calcShadow(dotLightNormal);
-            vec3 lighting = (shadow * (diffuse) + ambient) * ioColor;
-
+            float shadow         = calcShadow(dotLightNormal);
+            vec3 lighting        = (shadow * diffuse + ambient) * ioColor;
+            
             ioResult = vec4(lighting, 1);
             break;
-
-        /*
-        case 1: //Used for cube entities.
-            vec3 lightPos = vec3(1, 4, 2.5);
-            vec3 lightDir = normalize(lightPos);
-            
-            vec3 norm    = normalize(ioNormal);
-            float diff   = max(dot(norm, lightDir), -0.6);
-            vec3 diffuse = (diff * ioColor * ioColor) + 0.3;
-            
-            ioResult = vec4(ioColor + diffuse, 1) * 0.5;
-            break;
-        */
     }
 }

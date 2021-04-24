@@ -21,7 +21,7 @@ void main() {
         case 0: case 1:
             ioColor     = uColor;
             ioFragPos   = vec3(uModel * vec4(aPosition, 1));
-            ioNormal    = transpose(inverse(mat3(uModel))) * (uNormal * aNormal);
+            ioNormal    = uNormal * aNormal;
             ioLightFrag = uLightSpace * vec4(ioFragPos, 1);
             gl_Position = uProjection * uView * uModel * vec4(aPosition, 1);
             break;
