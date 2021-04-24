@@ -38,8 +38,10 @@ public final class App {
     private final Window window;
     private final GLProgram hudProgram;
     private final GLProgram sceneProgram;
+    private final GLProgram depthProgram;
     private final HUD hud;
     private final Camera camera;
+    private final ShadowMap shadowMap;
     private static Scene scene;
     
     /**
@@ -102,10 +104,26 @@ public final class App {
             
             sceneProgram.addUniform(BufferType.INT,  "uType");
             sceneProgram.addUniform(BufferType.VEC3, "uColor");
+            sceneProgram.addUniform(BufferType.VEC3, "uLightPos");
             sceneProgram.addUniform(BufferType.MAT3, "uNormal");
             sceneProgram.addUniform(BufferType.MAT4, "uModel");
             sceneProgram.addUniform(BufferType.MAT4, "uView");
             sceneProgram.addUniform(BufferType.MAT4, "uProjection");
+            sceneProgram.addUniform(BufferType.MAT4, "uLightSpace");
+        }
+        
+        //Establish the shader for the shadow map.
+        {
+            var shaderSourceFiles = new LinkedList<Shader>() {{
+                add(new Shader("depthVertex.glsl", GL_VERTEX_SHADER));
+                add(new Shader("depthFragment.glsl", GL_FRAGMENT_SHADER));
+            }};
+            
+            depthProgram = new GLProgram(shaderSourceFiles, "depth");
+            depthProgram.use();
+            
+            depthProgram.addUniform(BufferType.MAT4, "uModel");
+            depthProgram.addUniform(BufferType.MAT4, "uLightSpace");
         }
         
         String cwd = Path.of("").toAbsolutePath().toString() + "\\freetype-jni-64.dll";
@@ -122,8 +140,9 @@ public final class App {
             JLogger.logSevere("failed to copy dll file", e);
         }
         
-        hud    = new HUD(cwd);
-        camera = new Camera();
+        hud       = new HUD(cwd);
+        camera    = new Camera();
+        shadowMap = new ShadowMap();
         Scene.setCameraReference(camera);
         OdeHelper.initODE2(0);
     }
@@ -162,10 +181,17 @@ public final class App {
                 scene.update();
             }
             
+            shadowMap.createMap(camera.up, depthProgram, scene);
+            
+            glViewport(0, 0, window.getWidth(), window.getHeight());
             glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
             
             sceneProgram.use();
             camera.render(sceneProgram);
+            sceneProgram.setUniform("uLightPos", shadowMap.lightPos);
+            sceneProgram.setUniform("uLightSpace", false, shadowMap.lightSpace);
+            glActiveTexture(GL_TEXTURE0);
+            glBindTexture(GL_TEXTURE_2D, shadowMap.depthTexHandle);
             scene.render(sceneProgram);
             
             hudProgram.use();

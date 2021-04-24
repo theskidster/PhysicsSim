@@ -30,8 +30,6 @@ public class EntityCube extends Entity {
     
     private final Matrix3f normal = new Matrix3f();
     
-    public Color color = Color.WHITE;
-    
     public EntityCube(Vector3f position, float width, float height, float depth, DWorld dWorld, DSpace dSpace) {
         super(position);
         
@@ -113,10 +111,10 @@ public class EntityCube extends Entity {
         MemoryUtil.memFree(indices);
         
         glVertexAttribPointer(0, 3, GL_FLOAT, false, (6 * Float.BYTES), 0);
-        glVertexAttribPointer(2, 3, GL_FLOAT, false, (6 * Float.BYTES), (3 * Float.BYTES));
+        glVertexAttribPointer(1, 3, GL_FLOAT, false, (6 * Float.BYTES), (3 * Float.BYTES));
         
         glEnableVertexAttribArray(0);
-        glEnableVertexAttribArray(2);
+        glEnableVertexAttribArray(1);
     }
     
     @Override
@@ -149,15 +147,17 @@ public class EntityCube extends Entity {
     }
 
     @Override
-    void render(GLProgram sceneProgram) {
+    void render(GLProgram program) {
         glEnable(GL_DEPTH_TEST);
         glEnable(GL_CULL_FACE);
         glBindVertexArray(vao);
         
-        sceneProgram.setUniform("uType", 1);
-        sceneProgram.setUniform("uColor", color.asVec3());
-        sceneProgram.setUniform("uNormal", true, normal);
-        sceneProgram.setUniform("uModel", false, modelMatrix);
+        if(!program.name.equals("depth")) {
+            program.setUniform("uType", 1);
+            program.setUniform("uColor", Color.WHITE.asVec3());
+            program.setUniform("uNormal", true, normal);
+        }
+        program.setUniform("uModel", false, modelMatrix);
         
         glDrawElements(GL_TRIANGLES, indices.capacity(), GL_UNSIGNED_INT, 0);
         glDisable(GL_CULL_FACE);

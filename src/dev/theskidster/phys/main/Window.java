@@ -1,7 +1,6 @@
 package dev.theskidster.phys.main;
 
 import dev.theskidster.phys.scene.Scene;
-import dev.theskidster.phys.scene.SceneGravityTest;
 import java.nio.IntBuffer;
 import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.opengl.GL11.glViewport;
@@ -121,6 +120,24 @@ public final class Window {
      */
     public static float getMouseY() {
         return mousePosY;
+    }
+    
+    /**
+     * Provides the current width of the window.
+     * 
+     * @return the width of the window in pixels
+     */
+    public int getWidth() {
+        return width;
+    }
+    
+    /**
+     * Provides the current height of the window.
+     * 
+     * @return the height of the window in pixels
+     */
+    public int getHeight() {
+        return height;
     }
     
 }

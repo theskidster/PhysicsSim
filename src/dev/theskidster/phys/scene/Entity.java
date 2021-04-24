@@ -75,9 +75,9 @@ abstract class Entity {
      * Used to organize the calls made to the graphics API by this entity. Called exclusively through the 
      * {@linkplain dev.theskidster.phys.scene.Scene#render(GLProgram) Scene.render()} method.
      * 
-     * @param sceneProgram the shader program that the scene will use to render objects 
+     * @param program the shader program that the scene will use to render objects 
      */
-    abstract void render(GLProgram sceneProgram);
+    abstract void render(GLProgram program);
     
     /**
      * Used to free all of the resources allocated by this entity once it is no longer needed. Calls to methods like 

@@ -112,10 +112,10 @@ public abstract class Scene {
     /**
      * Uses the shader program supplied to render the scene and its various {@linkplain Entity entities}.
      * 
-     * @param sceneProgram the shader program that the scene will use to render objects 
+     * @param program the shader program that the scene will use to render objects 
      */
-    public void render(GLProgram sceneProgram) {
-        entityMap.values().forEach(entity -> entity.render(sceneProgram));
+    public void render(GLProgram program) {
+        entityMap.values().forEach(entity -> entity.render(program));
     }
     
     /**
