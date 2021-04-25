@@ -29,7 +29,10 @@ import org.ode4j.ode.OdeHelper;
  */
 public final class App {
     
+    private static int tickCount = 0;
+    
     private static boolean vSync = true;
+    private static boolean showMetrics = true;
     
     public static final String DOMAIN  = "phys";
     public static final String VERSION = "0.0.0";
@@ -155,11 +158,13 @@ public final class App {
         window.show(monitor, hud, camera);
         
         //Variables for timestep
-        int tickCount = 0;
+        int cycles = 0;
+        int fps = 0;
         final double TARGET_DELTA = 1 / 60.0;
         double prevTime = glfwGetTime();
         double currTime;
         double delta = 0;
+        double deltaMetric = 0;
         boolean ticked;
         
         while(!glfwWindowShouldClose(window.handle)) {
@@ -171,9 +176,9 @@ public final class App {
             prevTime = currTime;
             ticked   = false;
             
-            //TODO: add metrics for hud
-            
             while(delta >= TARGET_DELTA) {
+                deltaMetric = delta;
+                
                 delta -= TARGET_DELTA;
                 ticked = true;
                 tickCount = (tickCount == Integer.MAX_VALUE) ? 0 : tickCount + 1;
@@ -181,6 +186,11 @@ public final class App {
                 glfwPollEvents();
                 
                 scene.update();
+                
+                if(tick(60)) {
+                    fps    = cycles;
+                    cycles = 0;
+                }
             }
             
             shadowMap.createMap(camera.up, depthProgram, scene);
@@ -200,12 +210,23 @@ public final class App {
             hud.setProjectionMatrix(hudProgram);
             scene.renderHUD(hudProgram, hud.font);
             
+            if(showMetrics) {
+                hud.font.drawString("FPS: " + fps, 12, window.getHeight() - 20, Color.WHITE, hudProgram);
+                hud.font.drawString("DELTA: " + (float) deltaMetric, 12, window.getHeight() - 40, Color.WHITE, hudProgram);
+                hud.font.drawString("TICKED: " + ticked, 12, window.getHeight() - 60, Color.WHITE, hudProgram);
+                hud.font.drawString("VSYNC: " + vSync, 12, window.getHeight() - 80, Color.YELLOW, hudProgram);
+                hud.font.drawString("MONITOR: " + monitor.info, 12, window.getHeight() - 100, Color.YELLOW, hudProgram);
+                hud.font.drawString("MEM FREE: " + Runtime.getRuntime().freeMemory(), 12, window.getHeight() - 120, Color.CYAN, hudProgram);
+            }
+            
             glfwSwapBuffers(window.handle);
             
             if(!ticked) {
                 try {
                     Thread.sleep(1);
                 } catch(InterruptedException e) {}
+            } else {
+                cycles++;
             }
         }
         
@@ -253,6 +274,21 @@ public final class App {
         scene = value;
         
         JLogger.logInfo("Entered scene: \"" + scene.name + "\"");
+    }
+    
+    /**
+     * Ticks (returns true) whenever the number of cycles has been reached. Intended to be used in if statements for systems that don't require the decoupled 
+     * precision of the {@link dev.theskidster.xjge.util.Timer Timer} class.
+     * 
+     * @param cycles the number of cycles until a tick occurs
+     * @return true every time the number of cycles is reached
+     */
+    public static boolean tick(int cycles) {
+        return tickCount % cycles == 0;
+    }
+    
+    public static void toggleMetrics() {
+        showMetrics = !showMetrics;
     }
     
 }

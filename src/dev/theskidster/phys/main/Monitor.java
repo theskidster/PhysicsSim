@@ -20,6 +20,8 @@ final class Monitor {
     
     final long handle;
     
+    final String info;
+    
     private final GLFWVidMode videoMode;
     
     /**
@@ -32,6 +34,8 @@ final class Monitor {
         width       = videoMode.width();
         height      = videoMode.height();
         refreshRate = videoMode.refreshRate();
+        
+        info = width + "x" + height + " " + refreshRate + "hz";
     }
     
 }

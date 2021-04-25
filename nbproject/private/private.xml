@@ -2,18 +2,18 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="5">
         <file>
-            <url>src/dev/theskidster/phys/shaders/sceneFragment.glsl</url>
-            <bookmark id="5">
-                <name/>
-                <line>25</line>
-                <key/>
-            </bookmark>
-        </file>
-        <file>
             <url>src/dev/theskidster/phys/scene/SceneTest.java</url>
             <bookmark id="3">
                 <name/>
                 <line>30</line>
+                <key/>
+            </bookmark>
+        </file>
+        <file>
+            <url>src/dev/theskidster/phys/shaders/sceneFragment.glsl</url>
+            <bookmark id="5">
+                <name/>
+                <line>25</line>
                 <key/>
             </bookmark>
         </file>
@@ -22,7 +22,6 @@
         <group>
             <file>file:/C:/Users/thesk/Documents/Testbed/collision/PhysicsSim/src/dev/theskidster/phys/main/App.java</file>
             <file>file:/C:/Users/thesk/Documents/Testbed/collision/PhysicsSim/src/dev/theskidster/phys/shaders/sceneFragment.glsl</file>
-            <file>file:/C:/Users/thesk/Documents/Testbed/collision/PhysicsSim/src/dev/theskidster/phys/main/FreeTypeFont.java</file>
         </group>
     </open-files>
 </project-private>

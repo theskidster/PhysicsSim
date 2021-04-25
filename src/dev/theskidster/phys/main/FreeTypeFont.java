@@ -146,7 +146,7 @@ public final class FreeTypeFont {
             Glyph g = glyphs.get(c);
             
             float x = xPos + g.bearingX;
-            float y = yPos + (g.height - g.bearingY);
+            float y = yPos + (g.bearingY - g.height);
             float w = g.width;
             float h = g.height;
             
