@@ -1,9 +1,9 @@
 package dev.theskidster.phys.scene;
 
-import dev.theskidster.phys.entities.EntityGround;
-import dev.theskidster.phys.entities.EntityCube;
-import dev.theskidster.phys.main.Color;
+import dev.theskidster.phys.commands.ResetScene;
 import dev.theskidster.phys.main.FreeTypeFont;
+import dev.theskidster.phys.main.Puppet;
+import dev.theskidster.phys.main.Window;
 import dev.theskidster.shadercore.GLProgram;
 import org.joml.Vector3f;
 
@@ -14,11 +14,15 @@ import org.joml.Vector3f;
 
 public class SceneGravityTest extends Scene {
     
-    public SceneGravityTest() {
+    public Puppet puppet = new Puppet();
+    
+    public SceneGravityTest(boolean setInitialCamera) {
         super("Gravity Test");
         
-        setCameraPosition(6, 4, 10);
-        setCameraDirection(-120, 20);
+        if(setInitialCamera) {
+            setCameraPosition(6, 4, 10);
+            setCameraDirection(-120, 20);
+        }
         
         dWorld.setGravity(0, -3, 0);
         dWorld.setERP(0.2);
@@ -31,6 +35,10 @@ public class SceneGravityTest extends Scene {
         addEntity("cube 1", new EntityCube(new Vector3f(0, 6, 0), 1, 1, 1, dWorld, dSpace));
         addEntity("cube 2", new EntityCube(new Vector3f(0.5f, 10, 0), 1, 1, 1, dWorld, dSpace));
         addEntity("cube 3", new EntityCube(new Vector3f(0, 12, 0.7f), 1, 1, 1, dWorld, dSpace));
+        
+        puppet.commands.add(new ResetScene("gravity test"));
+        
+        Window.setPuppet(puppet);
     }
 
     @Override

@@ -1,4 +1,4 @@
-package dev.theskidster.phys.entities;
+package dev.theskidster.phys.scene;
 
 import dev.theskidster.phys.main.Color;
 import dev.theskidster.phys.main.App;
@@ -30,7 +30,7 @@ public class EntityCube extends Entity {
     
     private final Matrix3f normal = new Matrix3f();
     
-    public EntityCube(Vector3f position, float width, float height, float depth, DWorld dWorld, DSpace dSpace) {
+    EntityCube(Vector3f position, float width, float height, float depth, DWorld dWorld, DSpace dSpace) {
         super(position);
         
         dBody = OdeHelper.createBody(dWorld);
@@ -118,7 +118,7 @@ public class EntityCube extends Entity {
     }
     
     @Override
-    public void update() {
+    void update() {
         position.x = (float) (dGeom.getPosition().get0());
         position.y = (float) (dGeom.getPosition().get1());
         position.z = (float) (dGeom.getPosition().get2());
@@ -147,7 +147,7 @@ public class EntityCube extends Entity {
     }
 
     @Override
-    public void render(GLProgram program) {
+    void render(GLProgram program) {
         glEnable(GL_DEPTH_TEST);
         glEnable(GL_CULL_FACE);
         glBindVertexArray(vao);
@@ -167,7 +167,7 @@ public class EntityCube extends Entity {
     }
 
     @Override
-    public void destroy() {
+    void destroy() {
         freeBuffers();
     }
 

@@ -66,7 +66,7 @@ public final class App {
         monitor = new Monitor();
         window  = new Window("ode4j testbed v" + VERSION, monitor);
         
-        glfwMakeContextCurrent(window.handle);
+        glfwMakeContextCurrent(Window.handle);
         GL.createCapabilities();
         
         JLogger.newHorizontalLine();
@@ -154,7 +154,7 @@ public final class App {
      * Exposes window and starts the applications main logic loop.
      */
     void start() {
-        setScene(new SceneGravityTest());
+        setScene(new SceneGravityTest(true));
         window.show(monitor, hud, camera);
         
         //Variables for timestep
@@ -167,7 +167,7 @@ public final class App {
         double deltaMetric = 0;
         boolean ticked;
         
-        while(!glfwWindowShouldClose(window.handle)) {
+        while(!glfwWindowShouldClose(Window.handle)) {
             currTime = glfwGetTime();
             
             delta += currTime - prevTime;
@@ -219,7 +219,7 @@ public final class App {
                 hud.font.drawString("MEM FREE: " + Runtime.getRuntime().freeMemory(), 12, window.getHeight() - 120, Color.CYAN, hudProgram);
             }
             
-            glfwSwapBuffers(window.handle);
+            glfwSwapBuffers(Window.handle);
             
             if(!ticked) {
                 try {
@@ -233,13 +233,6 @@ public final class App {
         GL.destroy();
         OdeHelper.closeODE();
         glfwTerminate();
-    }
-    
-    /**
-     * Gracefully terminates application execution.
-     */
-    void exit() {
-        glfwSetWindowShouldClose(window.handle, true);
     }
     
     /**

@@ -1,7 +1,6 @@
 package dev.theskidster.phys.main;
 
 import dev.theskidster.phys.scene.Scene;
-import dev.theskidster.phys.scene.SceneGravityTest;
 import java.nio.IntBuffer;
 import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.opengl.GL11.glViewport;
@@ -18,6 +17,8 @@ import static org.lwjgl.system.MemoryUtil.NULL;
  */
 public final class Window {
 
+    private static Puppet puppet;
+    
     private final int initialPosX;
     private final int initialPosY;
     private int width  = 1280;
@@ -26,7 +27,7 @@ public final class Window {
     private static float mousePosX;
     private static float mousePosY;
     
-    final long handle;
+    static long handle;
     
     private boolean mouseMiddleHeld;
     private boolean mouseRightHeld;
@@ -101,11 +102,13 @@ public final class Window {
         });
         
         glfwSetKeyCallback(handle, (window, key, scancode, action, mods) -> {
+            if(puppet != null) {
+                puppet.commands.forEach(command -> {
+                    command.execute(key, action, mods);
+                });
+            }
+            
             if(key == GLFW_KEY_ESCAPE) glfwSetWindowShouldClose(handle, true);
-            
-            //TODO: add command input mapping
-            
-            if(key == GLFW_KEY_SPACE && action == GLFW_PRESS) App.setScene(new SceneGravityTest());
         });
     }
     
@@ -143,6 +146,14 @@ public final class Window {
      */
     public int getHeight() {
         return height;
+    }
+    
+    public static long getHandle() {
+        return handle;
+    }
+    
+    public static void setPuppet(Puppet puppet) {
+        Window.puppet = puppet;
     }
     
 }

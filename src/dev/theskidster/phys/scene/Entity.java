@@ -1,4 +1,4 @@
-package dev.theskidster.phys.entities;
+package dev.theskidster.phys.scene;
 
 import dev.theskidster.shadercore.GLProgram;
 import java.nio.FloatBuffer;
@@ -35,7 +35,7 @@ public abstract class Entity {
      * 
      * @param position the position that this entity will be placed initially
      */
-    public Entity(Vector3f position) {
+    Entity(Vector3f position) {
         this.position = position;
     }
     
@@ -69,7 +69,7 @@ public abstract class Entity {
      * Used to organize the entities physics logic. Called exclusively through the 
      * {@linkplain dev.theskidster.phys.scene.Scene#update() Scene.update()} method.
      */
-    public abstract void update();
+    abstract void update();
     
     /**
      * Used to organize the calls made to the graphics API by this entity. Called exclusively through the 
@@ -77,13 +77,13 @@ public abstract class Entity {
      * 
      * @param program the shader program that the scene will use to render objects 
      */
-    public abstract void render(GLProgram program);
+    abstract void render(GLProgram program);
     
     /**
      * Used to free all of the resources allocated by this entity once it is no longer needed. Calls to methods like 
      * {@link freeBuffers()} should be made here.
      */
-    public abstract void destroy();
+    abstract void destroy();
     
     /**
      * Checks whether the entity has made a request to be removed. If it has, the entity will free all of the resources its allocated and be removed from the
@@ -91,7 +91,7 @@ public abstract class Entity {
      * 
      * @return true if the entities {@linkplain remove()} method has been invoked
      */
-    public boolean removalRequested() {
+    boolean removalRequested() {
         if(remove) destroy();
         return remove;
     }
@@ -99,6 +99,6 @@ public abstract class Entity {
     /**
      * Requests the {@linkplain destroy() destruction} and {@linkplain removalRequested() removal} of this entity.
      */
-    public void remove() { remove = true; }
+    void remove() { remove = true; }
     
 }

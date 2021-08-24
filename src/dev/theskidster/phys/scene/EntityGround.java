@@ -1,4 +1,4 @@
-package dev.theskidster.phys.entities;
+package dev.theskidster.phys.scene;
 
 import dev.theskidster.phys.main.App;
 import dev.theskidster.phys.main.Color;
@@ -19,7 +19,7 @@ import org.ode4j.ode.OdeHelper;
  * Created: Apr 14, 2021
  */
 
-public class EntityGround extends Entity {
+class EntityGround extends Entity {
 
     DBody dBody;
     DGeom dGeom;
@@ -27,7 +27,7 @@ public class EntityGround extends Entity {
     
     private final Matrix3f normal = new Matrix3f();
     
-    public EntityGround(double x, double y, double z, double w, DWorld dWorld, DSpace dSpace) {
+    EntityGround(double x, double y, double z, double w, DWorld dWorld, DSpace dSpace) {
         super(new Vector3f());
         
         dGeom = OdeHelper.createPlane(dSpace, x, y, z, w);
@@ -61,12 +61,12 @@ public class EntityGround extends Entity {
     }
 
     @Override
-    public void update() {
+    void update() {
         modelMatrix.translation(position);
     }
 
     @Override
-    public void render(GLProgram program) {
+    void render(GLProgram program) {
         glEnable(GL_DEPTH_TEST);
         glBindVertexArray(vao);
         
@@ -84,7 +84,7 @@ public class EntityGround extends Entity {
     }
 
     @Override
-    public void destroy() {
+    void destroy() {
         freeBuffers();
     }
 
