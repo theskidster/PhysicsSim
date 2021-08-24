@@ -1,5 +1,6 @@
 package dev.theskidster.phys.scene;
 
+import dev.theskidster.phys.entities.Entity;
 import dev.theskidster.phys.main.FreeTypeFont;
 import dev.theskidster.phys.main.Camera;
 import dev.theskidster.phys.main.Window;

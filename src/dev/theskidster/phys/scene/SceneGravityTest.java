@@ -1,5 +1,7 @@
 package dev.theskidster.phys.scene;
 
+import dev.theskidster.phys.entities.EntityGround;
+import dev.theskidster.phys.entities.EntityCube;
 import dev.theskidster.phys.main.Color;
 import dev.theskidster.phys.main.FreeTypeFont;
 import dev.theskidster.shadercore.GLProgram;
@@ -33,12 +35,10 @@ public class SceneGravityTest extends Scene {
 
     @Override
     public void renderHUD(GLProgram hudProgram, FreeTypeFont font) {
-        font.drawString("bleh", 40, 40, Color.WHITE, hudProgram);
     }
     
     @Override
     public void exit() {
-        
     }
 
 }
