@@ -27,7 +27,7 @@ class EntityGround extends Entity {
     
     private final Matrix3f normal = new Matrix3f();
     
-    public EntityGround(double x, double y, double z, double w, DWorld dWorld, DSpace dSpace) {
+    EntityGround(double x, double y, double z, double w, DWorld dWorld, DSpace dSpace) {
         super(new Vector3f());
         
         dGeom = OdeHelper.createPlane(dSpace, x, y, z, w);

@@ -30,7 +30,7 @@ public class EntityCube extends Entity {
     
     private final Matrix3f normal = new Matrix3f();
     
-    public EntityCube(Vector3f position, float width, float height, float depth, DWorld dWorld, DSpace dSpace) {
+    EntityCube(Vector3f position, float width, float height, float depth, DWorld dWorld, DSpace dSpace) {
         super(position);
         
         dBody = OdeHelper.createBody(dWorld);

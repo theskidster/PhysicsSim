@@ -15,7 +15,7 @@ import static org.lwjgl.opengl.GL30.*;
 /**
  * Abstract class which can be used to create dynamic objects within the {@linkplain dev.theskidster.phys.scene.Scene Scene}.
  */
-abstract class Entity {
+public abstract class Entity {
 
     protected final int vao = glGenVertexArrays();
     private final int vbo   = glGenBuffers();
@@ -28,7 +28,7 @@ abstract class Entity {
     
     private boolean remove;
     
-    Vector3f position;
+    public Vector3f position;
     
     /**
      * Creates a new entity object at the specified position within the 3D scene.
